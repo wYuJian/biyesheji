@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<!--suppress ALL -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../stylesheets/delivery.css">
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script>
+        $(function(){
+            var userName = '';
+            $.post('../cookies',function(data,status) {
+                if (data != '') {
+                    userName = data.username;
+                } else {
+                }
+                $.post('../delivery',{
+                    'username':userName
+                },function(data,status){
+                    console.log(JSON.parse(data));
+                    var dataJson = JSON.parse(data);
+                    for(var i in dataJson){
+                        $("#province option").each(function() {
+                            if($(this).val()== dataJson[i].user_province){
+                                $(this).prop('selected',true);
+                            }
+                        });
+//                    $("#city option").each(function() {
+//                        if($(this).val()== dataJson[i].user_city){
+//                            $(this).prop('selected',true);
+//                        }
+//                    });
+//                    $("#town option").each(function() {
+//                        if($(this).val()== dataJson[i].user_town){
+//                            $(this).prop('selected',true);
+//                        }
+//                    });
+                        $('#address').val(dataJson[i].user_address);
+                        $('#recipients').val(dataJson[i].user_recipients);
+                        $('#phone').val(dataJson[i].user_phone);
+                        $('#fixedphone').val(dataJson[i].user_fixedphone);
+                    }
+                })
+            })
+
+            $('#btn_up').on('click',function(){
+                var address =  $("#province").find('option:selected').text()+$("#city ").find('option:selected').text()+$("#town ").find('option:selected').text()+$("#address").val();
+                $.post('../delivery_updata',{
+                    'username':userName,
+                    'province':$("#province").find('option:selected').text(),
+                    'city':$("#city ").find('option:selected').text(),
+                    'town':$("#town ").find('option:selected').text(),
+                    'address':address,
+                    'recipients':$("#recipients").val(),
+                    'phone':$("#phone").val(),
+                    'fixedphone':$("#fixedphone").val()
+                },function(data,status){
+                        if(JSON.parse(data).code){
+                            alert('保存成功！');
+                        }else {
+                            alert('保存失败！')
+                        }
+                })
+            })
+        })
+    </script>
+</head>
+<!--收货信息-->
+<body>
+<div class="head"><p>收货人信息</p></div>
+<div class="wrap">
+    <div class="outer">
+        <span>所在地区<i style="color: red;">*</i></span>
+        <select name="province" id="province">
+            <option value="请选择">请选择</option>
+        </select>
+        <select name="city" id="city">
+            <option value="请选择">请选择</option>
+        </select>
+        <select name="town" id="town">
+            <option value="请选择">请选择</option>
+        </select>
+    </div>
+    <div>
+        <span>详细地址<i style="color: red;">*</i></span>
+        <textarea id="address" name="" id="" cols="40" rows="5" placeholder="建议您如实填写详细收货地址，例如街道名称，门牌号码，楼层和房间号等信息"></textarea>
+    </div>
+    <div>
+        <span>收件人名<i style="color: red;">*</i></span>
+        <input type="text" id="recipients" placeholder="长度不超过25个字符">
+    </div>
+    <div>
+        <span>手机号码*</span>
+        <input type="text" id="phone" placeholder="固定电话、手机号码必须填一项">
+    </div>
+    <div>
+        <span>固定电话*</span>
+        <input type="text" id="fixedphone">
+    </div>
+    <div>
+        <button id="btn_up">保存</button>
+    </div>
+</div>
+
+</body>
+<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+<script src="../javascripts/jQueryProvinces/js/area.js"></script>
+<script src="../javascripts/jQueryProvinces/js/select.js"></script>
+</html>

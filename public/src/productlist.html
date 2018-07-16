@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>吃货食铺</title>
+    <link rel="stylesheet" href="/stylesheets/head.css">
+    <link rel="stylesheet" href="/stylesheets/productlist.css">
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script>
+        $(function(){
+                $('#nav ul li a').on('click',function () {
+                    $.get('/productlist',{
+                        'product_type':$(this).attr('data-type')
+                    },function(data,status){
+                        for(var i in data){
+                            $('.snack_wrap ul').append(` <li>
+                    <a href="" class="img"><img src="${data[i].product_mainimg.substring(6)}" alt=""></a>
+                    <p class="product_name">${data[i].product_name}</p>
+                    <p class="price">￥${data[i].product_price}</p>
+                    <p class="btn">
+                        <a href="" class="btn_cart">加入购物车</a>
+                        <a href="" class="btn_collect">收藏</a>
+                    </p>
+                </li>`)
+                        }
+                    })
+                })
+
+
+        })
+    </script>
+</head>
+<body>
+<div class="head">
+    <div class="top">
+        <div class='leftContent fl'>
+            <span class='fl'>您好，欢迎您来到中国零食网！</span>
+            <a class='fl' href="./signin.html">登录&nbsp;|&nbsp;</a>
+            <a class='fl' href="./login.html">注册</a>
+        </div>
+        <div class='rightContent fr'>
+            <ul>
+                <li class='fl'><a href="##">个人中心&nbsp;&nbsp;|</a></li>
+                <li class='fl'><a href="##">购物车&nbsp;&nbsp;|</a></li>
+                <li class='fl'><a href="##">积分兑换&nbsp;&nbsp;|</a></li>
+                <li class='fl'><a href="##">帮助中心&nbsp;&nbsp;</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="herader">
+        <div class="logo">
+            <img src="" alt="">
+        </div>
+        <div id="search">
+            <div id="searchBg">
+                <input class='fl' type="text" placeholder="搜索">
+                <input class='search_btn fl'type="submit" value='找零食'>
+            </div>
+            <ul>
+                <li class='fl'><a href="###">海苔</a></li>
+                <li class='fl'><a href="###">果冻</a></li>
+                <li class='fl'><a href="###">饼干</a></li>
+                <li class='fl'><a href="###">锅巴</a></li>
+                <li class='fl'><a href="###">威化饼</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div id="nav">
+    <ul>
+        <li class="fl"><a href="../../storeIndex">首页</a></li>
+        <li class="fl">所有宝贝</li>
+        <li class="fl" ><a href="###" data-type="f07">坚果炒货</a></li>
+        <li class="fl" ><a href="###" data-type="f02">饼干糕点</a></li>
+        <li class="fl" ><a href="###" data-type="f05">糖果巧克力</a></li>
+        <li class="fl" ><a href="###" data-type="f01">蜜饯果干</a></li>
+        <li class="fl" ><a href="###" data-type="f04">肉类制品</a></li>
+        <li class="fl" ><a href="###" data-type="f06">海味零食</a></li>
+        <li class="fl" ><a href="###" data-type="f03">膨化零食</a></li>
+        <li class="fl" ><a href="###" data-type="f08">饮料</a></li>
+        <li class="fl" ><a href="###" data-type="f09">速食</a></li>
+    </ul>
+</div>
+<div class="wrap">
+    <div class="main">
+        <div class="crumbs">
+            当前位置：<span>首页</span><code>></code><span>用户中心</span>
+        </div>
+        <div class="snack_wrap">
+            <ul>
+                <li>
+                    <a href="" class="img"><img src="../images/12122_thumb_P_1497936894497.jpg" alt=""></a>
+                    <p class="product_name">我本满足原味肉松蛋卷225g</p>
+                    <p class="price">￥13.90</p>
+                    <p class="btn">
+                        <a href="" class="btn_cart">加入购物车</a>
+                        <a href="" class="btn_collect">收藏</a>
+                    </p>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

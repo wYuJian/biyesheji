@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>吃货食铺</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/storeIndex.css' />
+    <link rel="stylesheet" href="/stylesheets/head.css">
+    <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    <script>
+      $(function () {
+          $.post('../cookies',function(data,status){
+              console.log(data.username)
+              if(data.username != undefined){
+                  $('.user').empty();
+                  $('.user').append(`<a class='fl' href="../src/personal.html">${data.username}</a>`);
+                  $('.user').append(`<a class='fl' id="quit" href="javasscript:void(0)" style="margin-left: 10px;color: blue;">退出</a>`);
+                  $('.personal a').attr('href','../src/personal.html');
+                  $('.cart a').attr('href','./cart');
+              }else{
+                  $('.user').append(`<a class='fl' href="../src/signin.html">登录&nbsp;|&nbsp;</a>
+                 <a class='fl' href="../src/login.html">注册</a>`)
+                  $('.personal a').attr('href','../src/signin.html');
+                  $('.cart a').attr('href','../src/signin.html');
+              }
+          })
+          $.get('/index_today_new_product',{
+              product_price:20
+          },function (data,status) {
+              $.each(JSON.parse(data),function(index,today_product_list){
+//                  console.log(today_product_list)
+                  $(".today_new_productlist ul").append(`
+                        <li class='newdeal_box'>
+                             <a href='###' id='${today_product_list.product_id}'>
+                                     <img src='${today_product_list.product_mainimg.substring(6)}' alt=''>
+                                     <h3 class='newdeal_box_h3'>${today_product_list.product_name}</h3>
+                                     <em class='newdeal_box_em'>￥${today_product_list.product_price}</em>
+                             </a>
+                        </li>`);
+              })
+              for(var i=0;i<$('#new_productList li').length;i++){
+                  $('#new_productList li a').on('click',function () {
+                      console.log(this.id)
+                      location.href=`product_detail?product_id=${this.id}`
+                  })
+              }
+          })
+          for(var i=0;i< $('#hot_foods li').length;i++){
+              $('#hot_foods li a').on('click',function () {
+                  console.log(this.id)
+                  location.href=`product_detail?product_id=${this.id}`
+              })
+          }
+          for(var i=0;i< $('#nav li').length;i++){
+              $('#nav li a').on('click',function () {
+                  location.href=`productlist?product_type=${$(this).attr('data-type')}`
+              })
+          }
+          $('.to_top').hide();       //隐藏 to top按钮
+         $(window).scroll(function(){
+                       // console.log($(this).scrollTop());
+                       //当window的scrolltop距离大于200时，to top按钮显示
+             if($(this).scrollTop() > 200){
+                 $('.to_top').fadeIn();
+             }else{
+                 $('.to_top').fadeOut();
+             }
+         });
+         //点击to top 按钮返回顶部
+          $('.to_top').click(function(){
+              $('html ,body').animate({scrollTop: 0}, 1000);
+                  return false;
+          });
+          $(".banner_list li").on('mouseover',function () {
+              var bannerIndex= $(this).index();
+              $('.banner_img li').eq(bannerIndex).fadeIn("slow").siblings().fadeOut("slow");
+          })
+      })
+    </script>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="to_top">顶部</div>
+      <div class="head">
+        <div class="top">
+          <div class='leftContent fl'>
+            <span class='fl'>您好，欢迎您来到中国零食网！</span>
+            <div class="user fl">
+                 <!--<a class='fl' href="../src/signin.html">登录&nbsp;|&nbsp;</a>-->
+                 <!--<a class='fl' href="../src/login.html">注册</a>-->
+            </div>
+          </div>
+          <div class='rightContent fr'>
+            <ul>
+              <li class='fl personal'><a href="">个人中心&nbsp;&nbsp;|</a></li>
+              <li class='fl cart'><a href="">购物车&nbsp;&nbsp;|</a></li>
+              <li class='fl'><a href="../src/404.html">积分兑换&nbsp;&nbsp;|</a></li>
+              <li class='fl'><a href="../src/404.html">帮助中心&nbsp;&nbsp;</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="herader">
+          <div class="logo">
+          </div>
+          <div class="clear"></div>
+          <div id="search">
+            <div id="searchBg">
+              <input class='fl' type="text" placeholder="搜索">
+              <input class='search_btn fl'type="submit" value='找零食'>
+            </div>
+            <ul>
+              <li class='fl'><a href="###">海苔</a></li>
+              <li class='fl'><a href="###">果冻</a></li>
+              <li class='fl'><a href="###">饼干</a></li>
+              <li class='fl'><a href="###">锅巴</a></li>
+              <li class='fl'><a href="###">威化饼</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div id="nav">
+        <ul>
+          <li class="fl"><a href="../../storeIndex">首页</a></li>
+          <li class="fl"> <a href="###" data-type="all">所有宝贝</a></li>
+          <li class="fl" ><a href="###" data-type="f07">坚果炒货</a></li>
+          <li class="fl" ><a href="###" data-type="f02">饼干糕点</a></li>
+          <li class="fl" ><a href="###" data-type="f05">糖果巧克力</a></li>
+          <li class="fl" ><a href="###" data-type="f01">蜜饯果干</a></li>
+          <li class="fl" ><a href="###" data-type="f04">肉类制品</a></li>
+          <li class="fl" ><a href="###" data-type="f06">海味零食</a></li>
+          <li class="fl" ><a href="###" data-type="f03">膨化零食</a></li>
+          <li class="fl" ><a href="###" data-type="f08">饮料</a></li>
+          <li class="fl" ><a href="###" data-type="f09">速食</a></li>
+        </ul>
+      </div>
+      <div class="banner">
+        <ul class='banner_img'>
+          <li class="fl">
+            <img src="http://image.lingshi.com/data/afficheimg/1483001338086380522.jpg" alt="">
+          </li>
+          <li class="fl"><img src="http://image.lingshi.com/data/afficheimg/1505887232581925213.jpg" alt=""></li>
+          <li class="fl"><img src="http://image.lingshi.com/data/afficheimg/1491805028871729690.jpg" alt=""></li>
+          <li class="fl"><img src="http://image.lingshi.com/data/afficheimg/1483001338214561111.jpg" alt=""></li>
+        </ul>
+        <ul class='banner_list'>
+          <li><img src="http://image.lingshi.com/data/afficheimg/1483001338214561111.jpg" alt=""></li>
+          <li><img src="http://image.lingshi.com/data/afficheimg/1505887232581925213.jpg" alt=""></li>
+          <li><img src="http://image.lingshi.com/data/afficheimg/1491805028871729690.jpg" alt=""></li>
+          <li><img src="http://image.lingshi.com/data/afficheimg/1483001338214561111.jpg" alt=""></li>
+        </ul>
+      </div>
+      <div class="home_top_tab">
+        <ul class="tab_menu">
+          <li class="fl">今日疯抢</li>
+        </ul>
+        <div class='home_ad_list'>
+          <ul id="hot_foods">
+              <% product_list.forEach(function(product){ %>
+            <li>
+                <a href="###" id="<%= product.product_id%>">
+                    <p class="home_ad_list_p"></p>
+                    <img src="<%= product.product_mainimg.substring(6)%>" alt="">
+                    <h3 class='home_ad_list_h3'><%= product.product_name%></h3>
+                    <em class='home_ad_list_em'>￥<%= product.product_price%></em>
+                    <span class='home_ad_list_span'>进入购买</span>
+                </a>
+            </li>
+              <% }) %>
+          </ul>
+        </div>
+      </div>
+      <div class="layout_1090">
+        <div class="today_deal_tit"></div>
+        <div class="today_new_productlist">
+          <ul id="new_productList">
+
+          </ul>
+
+        </div>
+      </div>
+      <div class="footer">
+        <div class="footer_top">
+          <div class="footer_con">
+            <div class="title"> 品牌推荐</div>
+            <a href="###"><img src="http://image.lingshi.com/brandlogo/1429757461195146401.jpg" alt=""></a>
+            <a href="###"><img src="http://image.lingshi.com/brandlogo/1429757803834947066.jpg" alt=""></a>
+            <a href="###"><img src="http://image.lingshi.com/brandlogo/1429757709214956489.jpg" alt=""></a>
+            <a href="###"><img src="http://image.lingshi.com/brandlogo/1441849721167608370.jpg" alt=""></a>
+            <a href="###"><img src="http://image.lingshi.com/brandlogo/1441849764523193670.jpg" alt=""></a>
+            <a href="###"><img src="http://image.lingshi.com/brandlogo/1429757564376749057.jpg" alt=""></a>
+            <a href="###"><img src="http://image.lingshi.com/brandlogo/1441849623221917017.jpg" alt=""></a>
+            <a href="###"><img src="http://image.lingshi.com/brandlogo/1441849658851866852.jpg" alt=""></a>
+            <a href="###"><img src="http://image.lingshi.com/brandlogo/1496384505484931428.jpg" alt=""></a>
+            <a href="###"><img src="http://image.lingshi.com/brandlogo/1429757674657650852.jpg" alt=""></a>
+            <a href="###"><img src="http://image.lingshi.com/brandlogo/1506410689860507941.jpg" alt=""></a>
+            <a href="###"><img src="http://image.lingshi.com/brandlogo/1496383183643657017.jpg" alt=""></a>
+            <a href="###"><img src="http://image.lingshi.com/brandlogo/1496383434717353675.jpg" alt=""></a>
+            <a href="###"><img src="http://image.lingshi.com/brandlogo/1496384159172620773.jpg" alt=""></a>
+            <a href="###"><img src="http://image.lingshi.com/brandlogo/1496384698627732266.jpg" alt=""></a>
+            <a href="###"><img src="http://image.lingshi.com/brandlogo/1496384854828716348.jpg" alt=""></a>
+            <a href="###"><img src="http://image.lingshi.com/brandlogo/1506410714706212716.jpg" alt=""></a>
+            <a href="###"><img src="http://image.lingshi.com/brandlogo/1506410728920995712.JPG" alt=""></a>
+          </div>
+        </div>
+        <div class="footer_top_sen">
+          <div class="footer_links"></div>
+          <div class='tel'></div>
+        </div>
+        <div class="clear"></div>
+        <div class="footer_dy">
+          <div class="play_box"></div>
+        </div>
+        <div class="footer_center">
+          <div >
+            <a href="###">关于聚美优品</a>
+            <a href="###">INVESTOR RELATIONS</a>
+            <a href="###">商家入驻</a>
+            <a href="###">获取更新</a>
+            <a href="###">加入聚美</a>
+            <a href="###">品牌合作专区</a>
+            <a href="###">网站联盟</a>
+            <a href="###">媒体报道</a>
+            <a href="###">商务合作</a>
+          </div>
+        </div>
+        <div class="footer_copyright">
+          <p class='footer_copy_con'>COPYRIGHT © 2010-2017 北京创锐文化传媒有限公司 JUMEI.COM 保留一切权利。 客服热线：400-123-8888 <br></br>
+            京公网安备 11010102001226 | 京ICP证111033号 | 食品流通许可证 SP1101051110165515（1-1） | 营业执照</p>
+          <p>
+            <a class="footer_copy_logo logo01" href="###"></a>
+            <a class="footer_copy_logo logo02" href="###"></a>
+            <a class="footer_copy_logo logo03" href="###"></a>
+            <a class="footer_copy_logo logo04" href="###"></a>
+            <a class="footer_copy_logo logo05" href="###"></a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

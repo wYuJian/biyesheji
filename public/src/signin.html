@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>欢迎登录</title>
+    <link rel="stylesheet" href="../stylesheets/signin.css">
+    <link rel="stylesheet" href="../stylesheets/footer.css">
+    <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/blueimp-md5/1.1.0/js/md5.js"></script>
+    <script>
+        $(function () {
+            $("#login_btn").click(function () {
+                var username=$("#username").val();
+                var password=md5($("#password").val());
+                $.post("../signin",{
+                    "username":username,
+                    "password":password,
+                    },function (data,status) {
+//                    var json=JSON.parse(data);
+                       console.log(data)
+                    if(data.code==true){
+                           location.href="../../storeIndex"
+                    }else{
+                        alert('用户名或密码错误！');
+                    }
+                })
+            })
+        })
+
+    </script>
+</head>
+<body>
+<div id="header_container">
+    <div id="logo">
+        <a href="../../storeIndex" class="home fl" title="吃货食铺" >属于你的零食地盘 </a>
+        <div class="header_logo_box fr">
+            <a href="../../storeIndex"  class="top_link lightning" ></a>
+            <a href="../../storeIndex"  class="top_link gild" ></a>
+            <a href="../../storeIndex"  class="top_link credit" ></a>
+        </div>
+    </div>
+</div>
+<div class="clear"></div>
+<div class="sign">
+    <div class="loginWrap">
+        <div class="loginImage fl"></div>
+        <div class="loginBord fr">
+            <div class="loginTit">
+                <div class="tosignup fr">还没有食铺帐号？<a href="./login.html">马上注册</a></div>
+                <h1 class="fl"><strong>登录吃货食铺</strong></h1>
+            </div>
+            <input type="text" id="username" placeholder="请输入用户名">
+            <input type="password" id="password" placeholder="请输入密码">
+            <a href="###" class='resetreq'>忘记密码？</a>
+            <button class="login_btn" id="login_btn">登录</button>
+        </div>
+    </div>
+</div>
+<div class="clear"></div>
+<div class="footer_copyright">
+    <p class='footer_copy_con'>COPYRIGHT © 2010-2017 北京创锐文化传媒有限公司 JUMEI.COM 保留一切权利。 客服热线：400-123-8888 <br></br>
+        京公网安备 11010102001226 | 京ICP证111033号 | 食品流通许可证 SP1101051110165515（1-1） | 营业执照</p>
+    <p>
+        <a class="footer_copy_logo logo01" href="###"></a>
+        <a class="footer_copy_logo logo02" href="###"></a>
+        <a class="footer_copy_logo logo03" href="###"></a>
+        <a class="footer_copy_logo logo04" href="###"></a>
+        <a class="footer_copy_logo logo05" href="###"></a>
+    </p>
+</div>
+</body>
+</html>

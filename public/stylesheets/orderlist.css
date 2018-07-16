@@ -1,0 +1,117 @@
+*{margin: 0;padding: 0;list-style: none;}
+.page-container{
+    padding: 20px;
+}
+.fl{
+    float: left;
+}
+.fr{
+    float: right;
+}
+.text-c{
+    width: 100%;
+    text-align: center;
+}
+.input-text{
+    font-size: 14px;
+    height: 31px;
+    line-height: 1.42857;
+    padding: 4px;
+    border: solid 1px #ddd;
+    box-sizing: border-box;
+}
+.btn-success{
+    color: #fff;
+    background-color: #5eb95e;
+    border-color: #5eb95e;
+    border-radius: 4px;
+    padding: 4px 12px;
+    display: inline-block;
+    box-sizing: border-box;
+    cursor: pointer;
+    text-align: center;
+    font-weight: 400;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+.wrap{
+    margin: 20px auto;
+}
+.tab_click{
+    background:#e61952 ;
+    color: white;
+    text-align: center;
+}
+.wrap-nav .wrap-nav-tab{
+    width: 400px;
+    height: 40px;
+    margin: 0 auto;
+    list-style: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+.wrap-nav ul li{
+    text-align: center;
+    padding: 8px;
+    float: left;
+    border: 1px solid #dddddd;
+}
+.information-user{
+    font-size:12px;
+}
+.noship{
+    padding: 5px;
+    box-sizing: border-box;
+    background: #e61952;
+    color: white;
+}
+.ship{
+    padding: 5px;
+    box-sizing: border-box;
+    background: #5eb95e;
+    color: white;
+}
+.goodsname{
+    position: relative;
+    top: -35px;
+    word-break:break-all;
+    clear: both;
+    width: 60%;
+    display: inline-block;
+    height: 30px;
+    color: #3089dc;
+}
+.btn-ship{
+    width: 80px;
+    height: 30px;
+    display: inline-block;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 5px;
+    text-decoration: none;
+    background: #3089dc;
+    color: white;
+    outline: none;
+}
+.layer-shade{
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+    position: absolute;z-index: 222;
+}
+.layer-title{
+    width: 95%;
+    padding: 10px;
+}
+.layer-title a{
+    text-decoration: none;
+    color: black;
+}
+.btn-set{
+    width: 70px;
+    height: 31px;
+    background: #5a98dd;
+    color: white;
+    border-radius: 5px;
+    outline: none;
+}

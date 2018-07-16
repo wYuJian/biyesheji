@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>商品详情</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    <style>
+      img{
+        width: 100px;
+        height: 100px;
+      }
+      .addToCart{
+        width: 200px;
+        height: 50px;
+        background: #e61952;
+        outline: none;
+        border: 0;
+        cursor: pointer;
+        color: white;
+      }
+      .title{
+        text-align: center;
+        color: #e61952;
+      }
+      .content{
+        width: 400px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+      }
+    </style>
+    <script>
+      $(function () {
+          $("#addToCart").click(function () {
+              location.href="cart";
+          })
+      })
+    </script>
+  </head>
+  <body>
+    <h1 class="title">商品成功加入购物车！</h1>
+    <div class="content">
+        <p>编号： <%= product_id %></p>
+        <p>名称： <%= product_name %></p>
+        <p>价格： <%= product_price %></p>
+        <p>描述： <img src="<%= product_mainimg%>" alt=""></p>
+
+        <button id="addToCart" class="addToCart">去购物车结算</button>
+    </div>
+  </body>
+</html>

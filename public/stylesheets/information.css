@@ -1,0 +1,57 @@
+*{margin: 0;padding: 0;}
+ul{
+    list-style: none;
+}
+.fl{
+    float: left;
+}
+.fr{
+    float: right;
+}
+.head p{
+    width: 100%;
+    background: #ffd6ba;
+    color: #ff6667;
+    font-size: 16px;
+    padding: 5px;
+}
+table{
+    margin: 20px auto;
+    color: #666;
+}
+table tbody tr td{
+    padding: 5px;
+}
+table tbody tr:nth-child(2) input{
+    width: 150px;
+    height: 20px;
+}
+table tbody tr:nth-child(4) input{
+    width: 302px;
+    height: 30px;
+}
+table tbody tr:nth-child(5) input{
+    width: 302px;
+    height: 30px;
+}
+table tbody tr:nth-child(6) input{
+    width: 302px;
+    height: 30px;
+}
+table tbody tr:nth-child(7) input{
+    width: 302px;
+    height: 30px;
+}
+table tbody tr:nth-child(8) input{
+    width: 302px;
+    height: 30px;
+}
+table tbody tr:nth-child(9) input{
+    width: 302px;
+    height: 30px;
+}
+button{
+    width: 80px;
+    height: 30px;
+
+}

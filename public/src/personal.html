@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户中心</title>
+    <link rel="stylesheet" href="../stylesheets/personal.css">
+    <link rel="stylesheet" href="/stylesheets/head.css">
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script>
+        $(function(){
+            $.post('../cookies',function(data,status){
+                console.log(data)
+                if(data.username != undefined){
+                    $('.user').empty();
+                    $('.user').append(`<a class='fl' href="../src/personal.html">${data.username}</a>`);
+                    $('.user').append(`<a class='fl' id="quit" href="javasscript:void(0)" style="margin-left: 10px;color: blue;">退出</a>`);
+                    $('.personal a').attr('href','../src/personal.html');
+                    $('.cart a').attr('href','./cart');
+                }else{
+                    $('.user').append(`<a class='fl' href="../src/signin.html">登录&nbsp;|&nbsp;</a>
+                 <a class='fl' href="../src/login.html">注册</a>`)
+                    $('.personal a').attr('href','../src/signin.html');
+                    $('.cart a').attr('href','../src/signin.html');
+                }
+            })
+            for(var i=0;i< $('#nav li').length;i++){
+                $('#nav li a').on('click',function () {
+                    location.href=`../productlist?product_type=${$(this).attr('data-type')}`
+                })
+            }
+            $(".panel li a").click(function(event) {
+                // console.log(event.target);
+                $("iframe").attr('src', event.target);
+            });
+            $(".btn-slide").click(function(event) {
+                // var index= $(this).index();
+                $(this).next(".panel").slideToggle('fast',"linear",1000);
+            });
+        })
+    </script>
+</head>
+<body>
+<div class="head">
+    <div class="top">
+        <div class='leftContent fl'>
+            <span class='fl'>您好，欢迎您来到中国零食网！</span>
+            <div class="user fl">
+                <!--<a class='fl' href="../src/signin.html">登录&nbsp;|&nbsp;</a>-->
+                <!--<a class='fl' href="../src/login.html">注册</a>-->
+            </div>
+        </div>
+        <div class='rightContent fr'>
+            <ul>
+                <li class='fl'><a href="">个人中心&nbsp;&nbsp;|</a></li>
+                <li class='fl'><a href="../cart">购物车&nbsp;&nbsp;|</a></li>
+                <li class='fl'><a href="##">积分兑换&nbsp;&nbsp;|</a></li>
+                <li class='fl'><a href="##">帮助中心&nbsp;&nbsp;</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="herader">
+        <div class="logo"></div>
+        <div class="clear"></div>
+        <div id="search">
+            <div id="searchBg">
+                <input class='fl' type="text" placeholder="搜索">
+                <input class='search_btn fl'type="submit" value='找零食'>
+            </div>
+            <ul>
+                <li class='fl'><a href="###">海苔</a></li>
+                <li class='fl'><a href="###">果冻</a></li>
+                <li class='fl'><a href="###">饼干</a></li>
+                <li class='fl'><a href="###">锅巴</a></li>
+                <li class='fl'><a href="###">威化饼</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div id="nav">
+    <ul>
+        <li class="fl"><a href="../../storeIndex">首页</a></li>
+        <li class="fl"> <a href="###" data-type="all">所有宝贝</a></li>
+        <li class="fl" ><a href="###" data-type="f07">坚果炒货</a></li>
+        <li class="fl" ><a href="###" data-type="f02">饼干糕点</a></li>
+        <li class="fl" ><a href="###" data-type="f05">糖果巧克力</a></li>
+        <li class="fl" ><a href="###" data-type="f01">蜜饯果干</a></li>
+        <li class="fl" ><a href="###" data-type="f04">肉类制品</a></li>
+        <li class="fl" ><a href="###" data-type="f06">海味零食</a></li>
+        <li class="fl" ><a href="###" data-type="f03">膨化零食</a></li>
+        <li class="fl" ><a href="###" data-type="f08">饮料</a></li>
+        <li class="fl" ><a href="###" data-type="f09">速食</a></li>
+    </ul>
+</div>
+<div class="wrap">
+    <div class="main">
+        <div class="crumbs">
+            当前位置：<span>首页</span><code>></code><span>用户中心</span>
+        </div>
+        <div class='main_left fl'>
+            <div><a href="personal.html">个人中心</a></div>
+            <h5 class="btn-slide">账户中心</h5>
+            <ul class="panel">
+                <li><a href="information.html" onclick='return false;' target="information">个人信息</a></li>
+                <li><a href="delivery.html" onclick='return false;' target="delivery">收货信息</a></li>
+                <li><a href="changepassword.html" onclick='return false;' target="changepassword">修改密码</a></li>
+            </ul>
+            <h5 class="btn-slide">订单中心</h5>
+            <ul class="panel">
+                <li><a href="order.html" onclick="return false;" target="order">我的订单</a></li>
+                <li><a href="collection.html" onclick="return false;" target="collection">我的收藏</a></li>
+                <li><a href="./comment.html" onclick="return false;" target="comment">我的评论</a></li>
+            </ul>
+            <h5 class="btn-slide">服务中心</h5>
+            <ul class="panel">
+                <li><a href="message.html" onclick="return false;" target="message">会员留言</a></li>
+                <li><a href="complaints.html" onclick="return false;" target="complaints" >我要投诉</a></li>
+            </ul>
+        </div>
+        <div class="main-right fr">
+            <iframe src="information.html" frameborder="0" scrolling="no" height="1000px" width="760px" name="information"></iframe>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="clear"></div>
+<div class="footer">
+    <div class="footer_top_sen">
+        <div class="footer_links"></div>
+        <div class='tel'></div>
+    </div>
+    <div class="clear"></div>
+    <div class="footer_dy">
+        <div class="play_box"></div>
+    </div>
+    <div class="footer_center">
+        <div >
+            <a href="###">关于聚美优品</a>
+            <a href="###">INVESTOR RELATIONS</a>
+            <a href="###">商家入驻</a>
+            <a href="###">获取更新</a>
+            <a href="###">加入聚美</a>
+            <a href="###">品牌合作专区</a>
+            <a href="###">网站联盟</a>
+            <a href="###">媒体报道</a>
+            <a href="###">商务合作</a>
+        </div>
+    </div>
+    <div class="footer_copyright">
+        <p class='footer_copy_con'>COPYRIGHT © 2010-2017 北京创锐文化传媒有限公司 JUMEI.COM 保留一切权利。 客服热线：400-123-8888 <br></br>
+            京公网安备 11010102001226 | 京ICP证111033号 | 食品流通许可证 SP1101051110165515（1-1） | 营业执照</p>
+        <p>
+            <a class="footer_copy_logo logo01" href="###"></a>
+            <a class="footer_copy_logo logo02" href="###"></a>
+            <a class="footer_copy_logo logo03" href="###"></a>
+            <a class="footer_copy_logo logo04" href="###"></a>
+            <a class="footer_copy_logo logo05" href="###"></a>
+        </p>
+    </div>
+</div>
+</body>
+</html>

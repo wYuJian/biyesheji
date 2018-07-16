@@ -1,0 +1,162 @@
+*{margin: 0;padding: 0;}
+.fr{
+    float: right;
+}
+.fl{
+    float: left;
+}
+.icon {
+    width: 1.5em; height: 1.5em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+    color: #e91952;
+}
+.page-container{
+    padding: 20px;
+}
+.text-c{
+    position: relative;
+    width: 100%;
+    text-align: center;
+}
+.input-text{
+    font-size: 14px;
+    height: 31px;
+    line-height: 1.42857;
+    padding: 4px;
+    border: solid 1px #ddd;
+    box-sizing: border-box;
+}
+.btn-success{
+    color: #fff;
+    background-color: #5eb95e;
+    border-color: #5eb95e;
+    border-radius: 4px;
+    padding: 4px 12px;
+    display: inline-block;
+    box-sizing: border-box;
+    cursor: pointer;
+    text-align: center;
+    font-weight: 400;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+.wrap{
+    margin: 20px auto;
+}
+.wrap-nav ul{
+    list-style: none;
+}
+.wrap-nav .nav-tab li{
+    text-align: center;
+    padding: 8px;
+    float: left;
+    border: 1px solid #dddddd;
+}
+.using{
+    color: white;
+    padding: 2px;
+    font-size: 14px;
+    border-radius: 5px;
+    background: #5eb95e;
+    display: inline-block;
+}
+.nousing{
+    color: white;
+    padding: 2px;
+    font-size: 14px;
+    border-radius: 5px;
+    background: #dd514c;
+    display: inline-block;
+}
+.information-user{
+    font-size:12px;
+}
+.information-user li div{
+    float: left;
+    text-align: center;
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+.information-user span,.information-user a{
+    display: inline-block;
+}
+.btn-addUser{
+    position: absolute;
+    left:80px;
+    width:90px;
+    height: 30px;
+    background: #5a98de;
+    color: white;
+    font-size: 14px;
+    font-weight: 400;
+    border-radius: 10px;
+    outline: none;
+}
+.span-01{
+    width: 80px;
+    height: 20px;
+}
+.span-02{
+    width: 110px;
+    height: 20px;
+}
+.span-03{
+    width: 100px;
+    height: 20px;
+}
+.span-04{
+    width: 60px;
+    height: 20px;
+}
+.span-05{
+    width: 120px;
+    height: 20px;
+}
+.span-06{
+    width: 160px;
+    height: 20px;
+}
+.span-07{
+    width: 85px;
+    height: 20px;
+}
+.span-08{
+    width: 150px;
+    height: 20px;
+}
+.layer-shade{
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+    position: absolute;z-index: 222;
+}
+.layer-title{
+    width: 95%;
+    padding: 10px;
+}
+.layer-title a{
+    text-decoration: none;
+    color: black;
+}
+.btn-add{
+    width: 70px;
+    height: 31px;
+    background: #5a98dd;
+    color: white;
+    border-radius: 5px;
+    outline: none;
+}
+.input{
+    width: 230px;
+    height: 25px;
+    border: 1px solid seagreen;
+}
+.information-user  .nouser{
+    width: 80%;
+    margin-top: 20px;
+    text-align: center;
+    font-size:24px;
+    color: #f8296d;
+}

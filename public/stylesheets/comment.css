@@ -1,0 +1,68 @@
+*{margin: 0;padding: 0;}
+ul{
+    list-style: none;
+}
+.fl{
+    float: left;
+}
+.fr{
+    float: right;
+}
+.head p{
+    width: 100%;
+    border-top: 2px solid #e33a3d;
+    color: #666;
+    font-size: 16px;
+    padding: 5px;
+}
+.wrap{
+    width: 760px;
+    margin: 20px auto;
+}
+.comment_tab_list{
+    width: 750px;
+    height: 30px;
+    margin: 0;
+    margin-top:10px;
+    border: 1px solid silver;
+}
+.comment_tab_list li{
+    width:120px;
+    height: 30px;
+    text-align: center;
+    border-left: 1px solid silver;
+    box-sizing: border-box;
+    line-height: 30px;
+    color: #3c3c3c;
+    font-size: 14px;
+}
+.comment_tab_list li:nth-child(1){
+    width: 250px;
+}
+.comment_tab_list li:nth-child(3){
+    width: 250px;
+}
+.comment_conten{
+    display: inline-block;
+    text-align: center;
+    width: 250px;
+    height: 40px;
+    font-size: 14px;
+}
+.commenter{
+    display: inline-block;
+    width: 120px;
+    height: 40px;
+    font-size: 14px;
+    text-align: center;
+    line-height: 40px;
+}
+.goods_name{
+    width: 250px;
+    height: 40px;
+    text-align: center;
+    display: inline-block;
+    overflow: hidden;
+    line-height: 40px;
+    color: #f8296d;
+}

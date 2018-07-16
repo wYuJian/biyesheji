@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>商品编辑</title>
+    <link rel="stylesheet" href="../stylesheets/editorgoods.css">
+    <script src="//at.alicdn.com/t/font_399103_dtwa7xjd6fvwjyvi.js"></script>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script>
+        function isStatus(productid,status){
+            console.log(productid)
+            var statusText = status;
+            $('.page-container').prepend(`<div class="layer-shade">
+                                            <div style="width:30%;margin: 30px auto;background: white;">
+                                             <div class="layer-title">提示信息 <a href="javascript:void(0)" class="fr">X</a></div>
+                                             <div style="width: 60%;margin:30px auto;">
+                                             <p style="color: red;margin-bottom: 10px;font-weight: 500;font-size: 18px;">确定修改？</p>
+                                             <div style="padding-bottom: 50px;">
+                                              <button class="btn-add" id="btn-sure" >保存</button>
+                                              <button class="btn-add" id="btn-reset">取消</button>
+                                              </div>
+                                              </div>
+                                              </div>
+                                       </div>`);
+            $('#btn-sure').on('click',function(){
+                var goodsStatus=1;
+                if(statusText == '下架'){
+                    goodsStatus = 0;
+                }
+                if(statusText == '上架'){
+                    goodsStatus = 1;
+                }
+                $.post('../up_goods_status',{
+                    'productId':productid,
+                    'goodsStatus':goodsStatus
+                },function(data,status){
+                    console.log(data.code)
+                    if(data.code == true){
+                        goodsPost('all');
+                        alert('修改成功!')
+                    }else{
+                        alert('修改失败！')
+                    }
+                    $('.layer-shade').remove('.layer-shade');
+                });
+            })
+            $('#btn-reset').on('click',function(){
+                $('.layer-shade').remove('.layer-shade');
+            })
+            $('.layer-title a').on('click',function(){
+                $('.layer-shade').remove('.layer-shade');
+            })
+        }
+        function goodsPost(isStatus){
+            $.post('../goodslist',{
+                'status':isStatus
+            },function(data,status){
+                if(data.code == false){
+                    $('.information-user').empty();
+                    $('.information-user').append('<li>还没有未上架的商品</li>')
+                }else{
+                    $('.information-user').empty();
+                    data.forEach(function(goods){
+                        addDom(goods.product_status,goods);
+                    });
+                }
+
+            })
+        }
+        function upGoods(productid){
+            $.post('../goodslist',{
+                'productId':productid
+            },function (data,status) {
+                console.log(data)
+                data.forEach(function (data) {
+                    $('.page-container').prepend(`<div class="layer-shade">
+                        <div style="width:55%;margin: 30px auto;background: white;">
+                            <div class="layer-title">修改商品<a href="javascript:void(0)" onclick="return $('.layer-shade').remove()"  class="fr">X</a></div>
+                            <div style="width: 60%;margin:30px auto;color: #272822;">
+                            <form action="../upGoodsInfo" enctype="multipart/form-data" method="post">
+                                <div style="margin-bottom: 5px"><i style="color: red;">* </i><span >商品编号：${productid} <input style="display:none;" type="text" name="product_id" value="${productid}"></span></div>
+                                <div style="margin-bottom: 5px"><i style="color: red;">* </i><span>商品名称：</span><input type="text" style="width: 250px;height: 25px;" name="product_name" value="${data.product_name}"></div>
+                                <div style="margin-bottom: 5px"><i style="color: red;">* </i><span>商品价格：</span><input type="text" style="width: 250px;height: 25px;" name="product_price" value="${data.product_price}"></div>
+                                <div style="margin-bottom: 5px"><i style="color: red;">* </i><span>商品库存：</span><input type="text" style="width: 250px;height: 25px;" name="product_stock" value="${data.product_stock}"></div>
+                                <div style="margin-bottom: 5px"><i style="color: red;">* </i><span>商品主图：</span><input type="file" style="width: 250px;height: 25px;" name="img_upload" multiple="multiple" ><img style="width: 50px;height: 50px;" src="${data.product_mainimg.substring(6)}" alt=""></div>
+                                <div style="margin-bottom: 5px"><i style="color: red;">* </i><span>商品描述：</span><input type="file" style="width: 250px;height: 25px;" name="img_upload2" multiple="multiple"><img style="width: 80px;height: 100px;"src="${data.product_img.substring(6)}" alt=""></div>
+                                <div style="margin-bottom: 5px"><i style="color: red;">* </i><span>商品描述：</span><input type="text" style="width: 250px;height: 25px;" name="product_desc" value="${data.product_desc}"></div>
+                                <div style="margin-bottom: 5px"><i style="color: red;">* </i><span>商品品牌：</span><input type="text" style="width: 250px;height: 25px;" name="product_brand" value="${data.product_brand}"></div>
+                                <div style="margin-bottom: 5px"><i style="color: red;">* </i><span>商品产地：</span><input type="text" style="width: 250px;height: 25px;" name="product_origin" value="${data.product_origin}"></div>
+                                <div style="margin-bottom: 5px"><i style="color: red;">* </i><span>商品重量：</span><input type="text" style="width: 250px;height: 25px;" name="product_weight" value="${data.product_weight}">g</div>
+                                <div style="margin-bottom: 5px"><i style="color: red;">* </i><span>商品口味：</span><input type="text" style="width: 250px;height: 25px;" name="product_taste" value="${data.product_taste}"></div>
+                                <div style="margin-bottom: 5px"><i style="color: red;">* </i><span>食用方法：</span><input type="text" style="width: 250px;height: 25px;" name="product_method" value="${data.product_method}"></div>
+                                <div style="margin-bottom: 5px"><i style="color: red;">* </i><span>生产日期：</span><input type="text" style="width: 250px;height: 25px;" name="product_date" value="${data.product_date}"></div>
+                                <div style="margin-bottom: 5px"><i style="color: red;">* </i><span>保&nbsp;&nbsp;质&nbsp;期：</span><input type="text" style="width: 250px;height: 25px;" name="product_shelflife" value="${data.product_shelflife}"></div>
+                                <div style="margin-bottom: 5px"><i style="color: red;">* </i><span>储存方式：</span><input type="text" style="width: 250px;height: 25px;" name="product_storage" value="${data.product_storage}" ></div>
+                                 <div style="padding-bottom: 50px;">
+                                      <input type="submit" class="btn-add" value="保存">
+                                      <button class="btn-add" id="btn-reset">取消</button>
+                                 </div>
+                            </form>
+                           </div>
+                        </div>
+                </div>`);
+                })
+                $('#btn-reset').on('click',function(){
+                   $('.layer-shade').remove();
+                })
+            })
+
+
+        }
+        function addDom(status,goods){
+            if(status == 1){
+                $('.information-user').append(`<li>
+                                <div class="fl li-div-02"><span>${goods.product_id}</span></div>
+                                <div class="fl li-div-03"><a href="../product_detail?product_id=${goods.product_id}" target="_blank" style="position: absolute;left: 30px;top: 13px;"><img style="width: 54px;height: 54px;" src="${goods.product_mainimg.substring(6)}" alt=""></a><p class="product-title"><a href="../product_detail?product_id=${goods.product_id}" target="_blank">${goods.product_name}</a></p></div>
+                                <div class="fl li-div-04"><span>${goods.product_price}</span></div>
+                                <div class="fl li-div-05"><span>${goods.product_stock}</span></div>
+                                <div class="fl li-div-06"><span>${goods.product_sales}</span></div>
+                                <div class="fl li-div-07"><span style="color: white;padding: 2px;font-size: 14px;border-radius: 5px;background: #5eb95e;display: inline-block;line-height: normal">已上架</span></div>
+                                <div class="fl li-div-08 ">
+                        <a href="javascript:void(0)" onclick="isStatus(${goods.product_id},$(this).attr('title'))" title="下架">
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-xiajia"></use>
+                            </svg>
+                        </a>
+                        <a href="javascript:void(0)" onclick="upGoods(${goods.product_id})" title="修改">
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-xiugai"></use>
+                            </svg>
+                        </a>
+                        <a href="javascript:void(0)" onclick="upGoods(${goods.product_id})"  title="删除">
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-shanchu"></use>
+                            </svg>
+                        </a>
+                    </div>
+                           </li>`);
+            }else{
+                $('.information-user').append(`<li>
+                                <div class="fl li-div-02"><span>${goods.product_id}</span></div>
+                                <div class="fl li-div-03"><a href="../product_detail?product_id=${goods.product_id}" target="_blank" style="position: absolute;left: 30px;top: 13px;"><img style="width: 54px;height: 54px;" src="${goods.product_mainimg.substring(6)}" alt=""></a><p class="product-title"><a href="../product_detail?product_id=${goods.product_id}" target="_blank">${goods.product_name}</a></p></div>
+                                <div class="fl li-div-04"><span>${goods.product_price}</span></div>
+                                <div class="fl li-div-05"><span>${goods.product_stock}</span></div>
+                                <div class="fl li-div-06"><span>${goods.product_sales}</span></div>
+                                <div class="fl li-div-07"><span style="color: white;padding: 2px;font-size: 14px;border-radius: 5px;background: red;display: inline-block;line-height: normal">仓库中</span></div>
+                                <div class="fl li-div-08 ">
+                        <a href="javascript:void(0)" onclick="isStatus(${goods.product_id},$(this).attr('title'))" title="上架">
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-iconfontshangpinshangjia"></use>
+                            </svg>
+                        </a>
+                        <a href="javascript:void(0)" onclick="upGoods(${goods.product_id})"  title="修改">
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-xiugai"></use>
+                            </svg>
+                        </a>
+                        <a href="javascript:void(0)" onclick="upGoods(${goods.product_id})"  title="删除">
+                            <svg class="icon" aria-hidden="true">
+                                <use xlink:href="#icon-shanchu"></use>
+                            </svg>
+                        </a>
+                    </div>
+                           </li>`);
+            }
+
+        }
+        function upInfoGoods(id){}
+        $(function(){
+            goodsPost('all');
+            $('input:radio[name="status"]').on('click',function(){
+//                console.log($(this).val())
+                goodsPost($(this).val());
+            })
+            $('.btn-success').on('click',function(){
+                $.post('../goodsSuccess',{
+                    'txt':$('#txt').val()
+                },function(data,status){
+                    $('.information-user').empty();
+                    console.log(data);
+                    if(data.code == false){
+                        $('.information-user').empty();
+                        $('.information-user').append('<li>没有查询到商品！</li>')
+                    }else{
+                        $('.information-user').empty();
+                        data.forEach(function(goods){
+                            addDom(goods.product_status,goods);
+                        });
+
+                    }
+
+                });
+            })
+            $('.btn-addGoods').on('click',function () {
+                $('.page-container').prepend(`<div class="layer-shade">
+                        <div style="width:55%;margin: 15px auto;background: white;">
+                            <div class="layer-title">添加商品<a href="javascript:void(0)" onclick="return $('.layer-shade').remove()" class="fr">X</a></div>
+                            <form action="../addGoods" enctype="multipart/form-data" method="post" >
+                            <div style="width: 60%;margin:30px auto;color: #3c3c3c;">
+                                <div style="margin-bottom: 5px"><i style="color: red;">* </i><span>商品名称：</span><input style="width: 270px;height: 30px;" name="product_name" type="text"></div>
+                                <div style="margin-bottom: 5px"><i style="color: red;">* </i><span>商品价格：</span><input style="width: 270px;height: 30px;" name="product_price" type="text"></div>
+                                <div style="margin-bottom: 5px"><i style="color: red;">* </i><span>商品库存：</span><input style="width: 270px;height: 30px;" name="product_stock" type="text"></div>
+                                <div style="margin-bottom: 5px"><i style="color: red;">* </i><span>商品主图：</span><input style="width: 270px;height: 30px;" name="img_upload" type="file"></div>
+                                <div style="margin-bottom: 5px"><i style="color: red;">* </i><span>商品描述：</span><input style="width: 270px;height: 30px;" name="img_upload2" type="file"></div>
+                                <div style="margin-bottom: 5px"><i style="color: red;">* </i><span>商品描述：</span><input style="width: 270px;height: 30px;" name="product_desc" type="text"></div>
+                                <div style="margin-bottom: 5px"><i style="color: red;">* </i><span>商品品牌：</span><input style="width: 270px;height: 30px;" name="product_brand" type="text"></div>
+                                <div style="margin-bottom: 5px"><i style="color: red;">* </i><span>商品产地：</span><input style="width: 270px;height: 30px;" name="product_origin" type="text"></div>
+                                <div style="margin-bottom: 5px"><i style="color: red;">* </i><span>商品重量：</span><input style="width: 270px;height: 30px;" name="product_weight" type="text"></div>
+                                <div style="margin-bottom: 5px"><i style="color: red;">* </i><span>商品口味：</span><input style="width: 270px;height: 30px;" name="product_taste" type="text"></div>
+                                <div style="margin-bottom: 5px"><i style="color: red;">* </i><span>商品分类：</span><select style="width: 270px;height: 30px;" name="product_species" id="">
+                                        <option value="蜜饯果干">蜜饯果干</option>
+                                        <option value="饼干糕点">饼干糕点</option>
+                                        <option value="膨化零食">膨化零食</option>
+                                        <option value="肉类制品">肉类制品</option>
+                                        <option value="糖果巧克力">糖果巧克力</option>
+                                        <option value="海味零食">海味零食</option>
+                                        <option value="坚果炒货">坚果炒货</option>
+                                 </select></div>
+                                <div style="margin-bottom: 5px"><i style="color: red;">* </i><span>食用方法：</span><input style="width: 270px;height: 30px;" name="product_method" type="text" value="打开即可食用"></div>
+                                <div style="margin-bottom: 5px"><i style="color: red;">* </i><span>生产日期：</span><input style="width: 270px;height: 30px;" name="product_date" type="text"></div>
+                                <div style="margin-bottom: 5px"><i style="color: red;">* </i><span>保&nbsp;&nbsp;质&nbsp;期：</span><input style="width: 270px;height: 30px;" type="text" name="product_shelflife"></div>
+                                <div style="margin-bottom: 5px"><i style="color: red;">* </i><span>储存方式：</span><input style="width: 270px;height: 30px;" type="text" name="product_storage" value="请置于阴凉干燥处，避光保存。" ></div>
+                                 <div style="padding-bottom: 50px;">
+                                      <input type="submit"class="btn-add">
+                                      <!--<button class="btn-add" id="btn-sure" >保存</button>-->
+                                      <button class="btn-add" id="btn-reset">取消</button>
+                                 </div>
+                           </div>
+                        </form>
+                        </div>
+                </div>`);
+                $('#btn-reset').on('click',function () {
+                    $('.layer-shade').remove();
+                })
+            })
+
+        })
+    </script>
+</head>
+<body>
+<div>
+    位置：商品管理->商品编辑
+</div>
+<div class="page-container">
+    <div class="text-c">
+        <div class="fl">
+            <input type="radio"  name="status" value="all" checked="checked">全部商品
+            <input type="radio" name="status" value="1">销售中
+            <input type="radio" name="status" value="0">未上架
+            <input type="button" value="+添加商品" class="btn-addGoods">
+        </div>
+        <input type="text" class="input-text" style="width:250px;border: 1px solid #3089dc;" placeholder="输入商品名称" id="txt" name="">
+        <button class='btn-success'>搜商品</button>
+    </div>
+    <div class="wrap">
+        <div class="wrap-nav">
+            <ul class="wrap-nav-tab">
+                <li style='width:65px;height:20px;'>商品编号</li>
+                <li style='width:386px;height:20px;'>商品名称</li>
+                <li style='width:80px;height:20px;'>价格</li>
+                <li style='width:80px;height:20px;'>库存</li>
+                <li style='width:80px;height:20px;'>销量</li>
+                <li style='width:85px;height:20px;'>状态</li>
+                <li style='width:118px;height:20px;'>操作</li>
+            </ul>
+            <ul class='information-user'>
+                <!--<li>-->
+                    <!--<div class="fl li-div-01"><span></span></div>-->
+                    <!--<div class="fl li-div-02"><span></span></div>-->
+                    <!--<div class="fl li-div-03"><a href="" target="_blank" style="position: absolute;left: 30px;top: 13px;"><img style="width: 54px;height: 54px;" src="" alt=""></a><p class="product-title"><a href="" target="_blank"></a></p></div>-->
+                    <!--<div class="fl li-div-04"><span></span></div>-->
+                    <!--<div class="fl li-div-05"><span></span></div>-->
+                    <!--<div class="fl li-div-06"><span></span></div>-->
+                    <!--<div class="fl li-div-07"><span style="color: white;padding: 2px;font-size: 14px;border-radius: 5px;background: #5eb95e;display: inline-block;line-height: normal">已上架</span></div>-->
+                    <!--<div class="fl li-div-08 ">-->
+                        <!--<a href="javascript:void(0)" title="下架">-->
+                            <!--<svg class="icon" aria-hidden="true">-->
+                                <!--<use xlink:href="#icon-xiajia"></use>-->
+                            <!--</svg>-->
+                        <!--</a>-->
+                        <!--<a href="javascript:void(0)" title="修改">-->
+                            <!--<svg class="icon" aria-hidden="true">-->
+                                <!--<use xlink:href="#icon-xiugai"></use>-->
+                            <!--</svg>-->
+                        <!--</a>-->
+                        <!--<a href="javascript:void(0)" title="删除">-->
+                            <!--<svg class="icon" aria-hidden="true">-->
+                                <!--<use xlink:href="#icon-shanchu"></use>-->
+                            <!--</svg>-->
+                        <!--</a>-->
+                    <!--</div>-->
+                <!--</li>-->
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>

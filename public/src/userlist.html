@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>会员列表</title>
+    <link rel="stylesheet" href="/stylesheets/userlist.css">
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script>
+        $(function(){
+            $.post('../userlist',function(data,status){
+                data.forEach(function(users){
+                    if(users.user_status == 1){
+                        $('.information-user').append(`<li>
+                                             <div  class="span-01"><span>${users.id}</span></div>
+                                       <div class="span-02"><span >${users.username}</span></div>
+                                       <div class="span-03"><span >${users.user_true_name}</span></div>
+                                       <div class="span-04"><span >${users.user_sex}</span></div>
+                                       <div class="span-05"><span >${users.phonenum}</span></div>
+                                       <div class="span-06"><span >${users.user_email}</span></div>
+                                       <div class="span-07"><span >${users.user_qq}</span></div>
+                                       <div class="span-08"><span >${users.user_address}</span></div>
+                                       <div class="span-09"><span >${users.user_famil_phone}</span></div>
+                                       <div class="span-10"><span ><p class="using">已启用</p></span></div>
+                                        </li>`);
+                    }else{
+                        $('.information-user').append(`<li>
+                                       <div  class="span-01"><span>${users.id}</span></div>
+                                       <div class="span-02"><span >${users.username}</span></div>
+                                       <div class="span-03"><span >${users.user_true_name}</span></div>
+                                       <div class="span-04"><span >${users.user_sex}</span></div>
+                                       <div class="span-05"><span >${users.phonenum}</span></div>
+                                       <div class="span-06"><span >${users.user_email}</span></div>
+                                       <div class="span-07"><span >${users.user_qq}</span></div>
+                                       <div class="span-08"><span >${users.user_address}</span></div>
+                                       <div class="span-09"><span >${users.user_famil_phone}</span></div>
+                                       <div class="span-10"><span ><p class="nousing">已禁用</p></span></div>
+                                        </li>`);
+                    }
+                })
+
+            })
+            $('.btn-success').on('click',function(){
+                $.post('../userlist',{
+                    'username':$('#input-text').val()
+                },function(data,status){
+                    $('.information-user').empty();
+                    if(data.code == false){
+                        $('.information-user').append('<li class="nouser">用户不存在，请确认用户名是否正确！</li>')
+                    }else{
+                        data.forEach(function(users){
+
+                            if(users.user_status == 1){
+                                $('.information-user').append(`<li>
+                                             <div  class="span-01"><span>${users.id}</span></div>
+                                       <div class="span-02"><span >${users.username}</span></div>
+                                       <div class="span-03"><span >${users.user_true_name}</span></div>
+                                       <div class="span-04"><span >${users.user_sex}</span></div>
+                                       <div class="span-05"><span >${users.phonenum}</span></div>
+                                       <div class="span-06"><span >${users.user_email}</span></div>
+                                       <div class="span-07"><span >${users.user_qq}</span></div>
+                                       <div class="span-08"><span >${users.user_address}</span></div>
+                                       <div class="span-09"><span >${users.user_famil_phone}</span></div>
+                                       <div class="span-10"><span ><p class="using">已启用</p></span></div>
+                                        </li>`);
+                            }else{
+                                $('.information-user').append(`<li>
+                                       <div  class="span-01"><span>${users.id}</span></div>
+                                       <div class="span-02"><span >${users.username}</span></div>
+                                       <div class="span-03"><span >${users.user_true_name}</span></div>
+                                       <div class="span-04"><span >${users.user_sex}</span></div>
+                                       <div class="span-05"><span >${users.phonenum}</span></div>
+                                       <div class="span-06"><span >${users.user_email}</span></div>
+                                       <div class="span-07"><span >${users.user_qq}</span></div>
+                                       <div class="span-08"><span >${users.user_address}</span></div>
+                                       <div class="span-09"><span >${users.user_famil_phone}</span></div>
+                                       <div class="span-10"><span ><p class="nousing">已禁用</p></span></div>
+                                        </li>`);
+                            }
+                        })
+                    }
+
+
+                })
+            })
+        })
+    </script>
+</head>
+<body>
+<div>
+    位置：会员管理->会员列表
+</div>
+<div class="page-container">
+    <div class="text-c">
+        <input type="text" class="input-text" style="width:250px;border: 1px solid #3089dc;" placeholder="输入会员名" id="input-text" name="">
+        <button class='btn-success'>搜用户</button>
+    </div>
+    <div class="wrap">
+        <div class="wrap-nav">
+            <ul class="nav-tab">
+                <li style='width:68px;height:20px;'>ID</li>
+                <li style='width:97px;height:20px;'>用户名</li>
+                <li style='width:70px;height:20px;'>实名</li>
+                <li style='width:40px;height:20px;'>性别</li>
+                <li style='width:110px;height:20px;'>手机</li>
+                <li style='width:140px;height:20px;'>邮箱</li>
+                <li style='width:110px;height:20px;'>QQ</li>
+                <li style='width:110px;height:20px;'>地址</li>
+                <li style='width:100px;height:20px;'>家庭电话</li>
+                <li style='width:70px;height:20px;'>账号状态</li>
+            </ul>
+            <div class="clear"></div>
+            <ul class='information-user'>
+
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>

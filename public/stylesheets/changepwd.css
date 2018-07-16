@@ -1,0 +1,33 @@
+*{margin: 0;padding: 0;}
+ul{
+    list-style: none;
+}
+.fl{
+    float: left;
+}
+.fr{
+    float: right;
+}
+.head p{
+    width: 100%;
+    background: #ffd6ba;
+    color: #ff6667;
+    font-size: 16px;
+    padding: 5px;
+}
+table{
+    margin: 20px auto;
+    color: #666666;
+}
+td{
+    padding: 5px;
+}
+input{
+    width: 302px;
+    height: 32px;
+}
+button{
+    width: 80px;
+    height: 30px;
+
+}

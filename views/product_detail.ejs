@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= product_name %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/head.css' />
+    <link rel="stylesheet" href="/stylesheets/product_detail.css">
+    <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    <!--<style>-->
+      <!--img{-->
+        <!--width: 100px;-->
+        <!--height: 100px;-->
+      <!--}-->
+    <!--</style>-->
+    <script>
+      $(function () {
+          var userName='';
+          $.post('../cookies',function(data,status){
+              console.log(data)
+              if(data.username != undefined){
+                  userName = data.username;
+                  $('.user').empty();
+                  $('.user').append(`<a class='fl' href="../src/personal.html">${data.username}</a>`);
+                  $('.user').append(`<a class='fl' id="quit" href="javasscript:void(0)" style="margin-left: 10px;color: blue;">退出</a>`);
+                  $('.personal a').attr('href','../src/personal.html');
+                  $('.cart a').attr('href','./cart');
+              }else{
+                  $('.user').append(`<a class='fl' href="../src/signin.html">登录&nbsp;|&nbsp;</a>
+                 <a class='fl' href="../src/login.html">注册</a>`)
+                  $('.personal a').attr('href','../src/signin.html');
+                  $('.cart a').attr('href','../src/signin.html');
+              }
+          })
+          for(var i=0;i< $('#nav li').length;i++){
+              $('#nav li a').on('click',function () {
+                  location.href=`productlist?product_type=${$(this).attr('data-type')}`
+              })
+          }
+          $("#add2cart").click(function () {
+              var productNum=$("#product_num").val();
+              location.href=`add2Cart?product_id=<%= product_id %>&product_num=${productNum}&username=${userName}`;
+          })
+          var index =0;
+          $('#product_num').on('blur',function () {
+              if($('#product_num').val() >= $('.stock').text()){
+                  $('#product_num').val($('.stock').text());
+              }
+          })
+
+          $('.addnum').on('click',function () {
+              if($('#product_num').val()!=''){
+                  index=$('#product_num').val();
+              }
+              index++;
+              if(index >=$('.stock').text()){
+                index =$('.stock').text();
+              }
+              $('#product_num').val(index);
+          })
+          $('.downnum').on('click',function () {
+              if($('#product_num').val()!=''){
+                  index=$('#product_num').val();
+              }
+              index--;
+              if(index==0){
+                  index=1;
+              }
+              $('#product_num').val(index);
+          })
+          $('#now2buy').on('click',function(){
+              console.log(userName);
+            if(userName !=''){
+              var productNum=$("#product_num").val();
+              location.href=`now2buy?product_id=<%= product_id %>&product_num=${productNum}&user=${userName}`;
+            }else{
+              location.href='../src/signin.html'
+            }
+              
+          })
+      })
+    </script>
+  </head>
+  <body>
+    <!--<h1>商品详情</h1>-->
+    <p style="display: none;">编号： <%= product_id %></p>
+    <!--<p>名称： <%= product_name %></p>-->
+    <!--<p>价格： <%= product_price %></p>-->
+    <!--<p>描述： <%= product_desc %></p>-->
+    <!--&lt;!&ndash;<img src="/images/upload_bd8b1cf50ef9931abff00b5fab78dd35.png" alt="">&ndash;&gt;-->
+    <!--<img src="<%= product_img%>" alt="">-->
+    <!--<button id="addToCart">加入购物车</button>-->
+    <div class="wrapper">
+      <div class="head">
+        <div class="top">
+          <div class='leftContent fl'>
+            <span class='fl'>您好，欢迎您来到中国零食网！</span>
+            <div class="user fl">
+              <!--<a class='fl' href="../src/signin.html">登录&nbsp;|&nbsp;</a>-->
+              <!--<a class='fl' href="../src/login.html">注册</a>-->
+            </div>
+          </div>
+          <div class='rightContent fr'>
+            <ul>
+              <li class='fl personal'><a href="##">个人中心&nbsp;&nbsp;|</a></li>
+              <li class='fl cart'><a href="##">购物车&nbsp;&nbsp;|</a></li>
+              <li class='fl'><a href="##">积分兑换&nbsp;&nbsp;|</a></li>
+              <li class='fl'><a href="##">帮助中心&nbsp;&nbsp;</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="herader">
+          <div class="logo">
+            <img src="" alt="">
+          </div>
+          <div id="search">
+            <div id="searchBg">
+              <input class='fl' type="text" placeholder="搜索">
+              <input class='search_btn fl'type="submit" value='找零食'>
+            </div>
+            <ul>
+              <li class='fl'><a href="###">海苔</a></li>
+              <li class='fl'><a href="###">果冻</a></li>
+              <li class='fl'><a href="###">饼干</a></li>
+              <li class='fl'><a href="###">锅巴</a></li>
+              <li class='fl'><a href="###">威化饼</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div id="nav">
+        <ul>
+          <li class="fl"><a href="../../storeIndex">首页</a></li>
+          <li class="fl"> <a href="###" data-type="all">所有宝贝</a></li>
+          <li class="fl" ><a href="###" data-type="f07">坚果炒货</a></li>
+          <li class="fl" ><a href="###" data-type="f02">饼干糕点</a></li>
+          <li class="fl" ><a href="###" data-type="f05">糖果巧克力</a></li>
+          <li class="fl" ><a href="###" data-type="f01">蜜饯果干</a></li>
+          <li class="fl" ><a href="###" data-type="f04">肉类制品</a></li>
+          <li class="fl" ><a href="###" data-type="f06">海味零食</a></li>
+          <li class="fl" ><a href="###" data-type="f03">膨化零食</a></li>
+          <li class="fl" ><a href="###" data-type="f08">饮料</a></li>
+          <li class="fl" ><a href="###" data-type="f09">速食</a></li>
+        </ul>
+      </div>
+      <div class="snack_bg">
+        <div class="wrap">
+          <div class="snack_info">
+            <div class="crumbs">
+              当前位置：<span>首页</span><code>></code><span><%= product_species %></span><code>></code><span><%= product_name %></span>
+            </div>
+            <div class="wrap_left fl"><img style=""src="<%= product_mainimg %>" alt=""></div>
+            <div class="wrap_right fr">
+              <h3><%= product_name %></h3>
+              <div class="price">
+                <p>￥<%= product_price %></p>
+              </div>
+              <div class="info_wrap">
+                <p class='info'>
+                  品牌：<em><%= product_brand %></em><span>|</span>
+                  产 地：<em><%= product_origin %></em><span>|</span>
+                  口 味：<em><%= product_taste %></em><span>|</span>
+                  净含量：<em><%= product_weight %>克</em>
+                </p>
+                <div class="storeinfocontainer">
+                  <span>库存：<em class="stock"><%=product_stock %></em><p>该商品现在可以下单</p></span>
+                </div>
+                <div class="num">
+                  <span class="fl">数量：</span>
+                  <ul class="fl">
+                    <li class="fl"><button class='downnum'>-</button></li>
+                    <li class="fl"><input type="text"id="product_num" value="1"></li>
+                    <li class="fl"><button class='addnum'>+</button></li>
+                  </ul>
+                </div>
+                <div class="tm-indcon">
+								<span>
+									月销量：
+									<em><%= product_sales %></em>
+								</span>
+                </div>
+              </div>
+              <div class="btn">
+                <button class="btn_cart" id="add2cart" title="加入购物车"></button>
+                <button class="btn_buy" id="now2buy" title="立即购买"></button>
+              </div>
+            </div>
+          </div>
+          <div class="clear"></div>
+        </div>
+      </div>
+      <div class="wrap">
+        <div class="tabContainer">
+          <ul class='tabHead'>
+            <li class='currentBtn fl'>零食详情</li>
+            <li class='fl'>零食点评</li>
+            <li class='fl'>配送支付</li>
+            <li class='fl'>服务保障</li>
+          </ul>
+          <div class="lingshi_a">
+            规格参数：
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tbody>
+              <tr>
+                <td width="25%">品牌: <%= product_brand %></td>
+                <td width="40%"><%= product_name %></td>
+                <td width="35%">口 味：<%= product_taste %>&nbsp;&nbsp;产 地：<%= product_origin %></td>
+              </tr>
+              <tr>
+                <td>毛重: <%= product_weight %>克</td>
+                <td>种类：<%= product_species %></td>
+                <td>食用方法：<%= product_method %></td>
+              </tr>
+              <tr>
+                <td>生产日期：<%= product_date %></td>
+                <td>保质期：<%= product_shelflife %></td>
+                <td>储存方法：<%= product_storage %></td>
+              </tr>
+              </tbody>
+            </table>
+            <table class="table_info">
+              <tbody>
+              <tr>
+                <td>
+                  <p>
+                    <img src="<%= product_img%>" alt="">
+                  </p>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+            <div class="tips">
+              温馨提示 ：由于部分商品包装更换较为频繁，因此您收到的商品有可能与图片不完全一致，请您以收到的商品实物为准同时我们会尽量做到及时更新，由此给您带来不便请多多谅解，谢谢！
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <div class="footer_top">
+          <div class="footer_con">
+            <a href="###"></a>
+            <a href="###"></a>
+            <a href="###"></a>
+            <a href="###"></a>
+            <a href="###"></a>
+            <a href="###"></a>
+            <a href="###"></a>
+          </div>
+        </div>
+        <div class="footer_top_sen">
+          <div class="footer_links">
+            <ul class='fl'></ul>
+            <ul class='fl'></ul>
+            <ul class='fl'></ul>
+            <ul class='fl'></ul>
+            <ul class='fl'></ul>
+            <div class="links_er_box fr">
+              <ul></ul>
+              <ul></ul>
+            </div>
+          </div>
+        </div>
+        <div class="clear"></div>
+        <div class="footer_dy">
+          <div class="play_box"></div>
+        </div>
+        <div class="footer_center">
+          <div >
+            <a href="###">关于聚美优品</a>
+            <a href="###">INVESTOR RELATIONS</a>
+            <a href="###">商家入驻</a>
+            <a href="###">获取更新</a>
+            <a href="###">加入聚美</a>
+            <a href="###">品牌合作专区</a>
+            <a href="###">网站联盟</a>
+            <a href="###">媒体报道</a>
+            <a href="###">商务合作</a>
+          </div>
+        </div>
+        <div class="footer_copyright">
+          <p class='footer_copy_con'>COPYRIGHT © 2010-2017 北京创锐文化传媒有限公司 JUMEI.COM 保留一切权利。 客服热线：400-123-8888 <br></br>
+            京公网安备 11010102001226 | 京ICP证111033号 | 食品流通许可证 SP1101051110165515（1-1） | 营业执照</p>
+          <p>
+            <a class="footer_copy_logo logo01" href="###"></a>
+            <a class="footer_copy_logo logo02" href="###"></a>
+            <a class="footer_copy_logo logo03" href="###"></a>
+            <a class="footer_copy_logo logo04" href="###"></a>
+            <a class="footer_copy_logo logo05" href="###"></a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

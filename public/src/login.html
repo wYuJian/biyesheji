@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>欢迎注册</title>
+    <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/blueimp-md5/1.1.0/js/md5.js"></script>
+    <link rel="stylesheet" href="../stylesheets/login.css">
+    <link rel="stylesheet" href="../stylesheets/footer.css">
+    <script>
+        $(function(){
+
+            $("#login_btn").click(function(){
+                var username=$("#username");
+                var password=$("#password");
+                var confirmPassword=$("#confirm_password");
+                var paypassword=$("#paypassword");
+                var phoneNum=$("#phone_num");
+                 if(username.val()!=""&&password.val()!=""&&confirmPassword.val()!=""&&paypassword.val()!=""){
+                     if(password.val()==confirmPassword.val()){
+                         var md5password=md5(password.val());
+                         var md5paypassword=md5(paypassword.val());
+//                         console.log(md5password);
+//                         console.log(md5paypassword);
+                         $.post("../login",{
+                             "username":username.val(),
+                             "password":md5password,
+                             "paypassword":md5paypassword,
+                             "phonenum":phoneNum.val()
+                             },function(data,status){
+                                alert(data);
+                             }
+                         )
+                     }else{
+                         alert("密码不一致！");
+                     }
+                 }else{
+                     alert("所有项都为必填项，不能为空！")
+                 }
+            })
+
+
+        })
+    </script>
+</head>
+<body>
+<div id="header_container">
+    <div id="logo">
+        <a href="../../storeIndex" class="home fl" title="吃货食铺" >属于你的零食地盘 </a>
+        <div class="header_logo_box fr">
+            <a href="./index.html"  class="top_link lightning" ></a>
+            <a href="./index.html"  class="top_link gild" ></a>
+            <a href="./index.html"  class="top_link credit" ></a>
+        </div>
+    </div>
+</div>
+<div class="clear"></div>
+<div class="sign">
+    <div class="loginWrap">
+        <div class="loginImage fl"></div>
+        <div class="loginBord fr">
+            <div class="loginTit">
+                <div class="tosignup fr">已有账号<a href="./signin.html" style="color: #e31256;">在此登录</a></div>
+                <h1 class="fl"><strong>用户注册</strong></h1>
+            </div>
+            <input type="text" id="username" placeholder="请输入用户名">
+            <input type="password" id="password" placeholder="请输入密码">
+            <input type="password" id="confirm_password" placeholder="请确认密码">
+            <input type="text" id="phone_num" placeholder="请输入手机号">
+            <input type="password" id="paypassword" placeholder="请设置支付密码">
+            <!-- <a href="###" class='resetreq'>忘记密码？</a> -->
+
+            <button class="login_btn" id="login_btn">同意协议并注册</button>
+        </div>
+    </div>
+</div>
+<div class="clear"></div>
+<div class="footer_copyright">
+    <p class='footer_copy_con'>COPYRIGHT © 2010-2017 北京创锐文化传媒有限公司 JUMEI.COM 保留一切权利。 客服热线：400-123-8888 <br></br>
+        京公网安备 11010102001226 | 京ICP证111033号 | 食品流通许可证 SP1101051110165515（1-1） | 营业执照</p>
+    <p>
+        <a class="footer_copy_logo logo01" href="###"></a>
+        <a class="footer_copy_logo logo02" href="###"></a>
+        <a class="footer_copy_logo logo03" href="###"></a>
+        <a class="footer_copy_logo logo04" href="###"></a>
+        <a class="footer_copy_logo logo05" href="###"></a>
+    </p>
+</div>
+</body>
+</html>

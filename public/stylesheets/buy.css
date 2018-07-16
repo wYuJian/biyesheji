@@ -1,0 +1,244 @@
+		html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+a{
+	text-decoration: none;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+.left{
+	float: left;
+}
+.right{
+	float: right;
+}
+.clear{
+	clear: both;
+}
+.wrap{
+	width: 980px;
+	margin: 0 auto;
+}
+.head{
+	width: 100%;
+	height: 20px;	
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+.top{
+			width: 90%;
+			margin: 10px auto;
+			font-size: 12px;
+			color: #777;
+		}
+		.top a{
+			display: block;
+			color: #777;
+		}
+		.rightContent{
+			width: 30%;
+		}
+		.leftContent{
+			width: 40%;
+			margin-left: 10px;
+		}
+		.leftContent span {
+			margin-right: 20px;
+		}
+		.rightContent ul li{
+			margin-left: 10px;
+		}
+		a{
+			display: inline-block;
+			text-decoration: none;
+		}
+		.herader{
+			width: 80%;
+			margin: 0 auto;
+		}
+		.logo{
+			height: 70px;
+			background: url(../images/logo.jpg) -107px -112px no-repeat;
+			margin-bottom: 40px;
+
+		}
+.nav li{
+	border-bottom:3px solid #b2d1ff;
+	text-align: center;
+    height: 24px;
+    line-height: 24px;
+    margin-right: 5px;
+    margin-left: 5px;
+    padding-bottom: 4px;
+    height: 30px;
+}
+.title{
+	
+}
+.s-title{
+	width: 410px;
+}
+.s-price{
+	width: 158px;
+}
+.s-amount{
+	width: 158px;
+}
+.s-total{
+	width: 158px;
+}
+.blue-line{
+	width: 100%;
+	height: 1px;
+	margin-bottom: 10px;
+	margin-top: 10px;
+	background: url(http://img04.taobaocdn.com/tps/i4/T1Ll1iXfNXXXXXXXXX-950-1.png);
+}
+.good_name{
+	width: 410px;
+	height: 82px;
+	overflow: hidden;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+.good_name span{
+	margin-top: 10px;
+	display: inline-block;
+	width: 280px;
+	height: 60px;
+	font-size: 14px;
+	text-align: center;
+	color: #404040;
+	word-break: break-all;
+}
+.good_name img{
+	margin-top: 10px;
+	width: 60px;
+	height: 60px;
+}
+.good_price{
+	width: 158px;
+	margin-left: 5px;
+	margin-right: 5px;
+	text-align: center;
+	height: 60px;
+	line-height: 60px;
+}
+.good_count{
+	width: 158px;
+	margin-left: 5px;
+	margin-right: 5px;
+	text-align: center;
+	height: 60px;
+	line-height: 60px;
+}
+.good_total{
+	width: 158px;
+	margin-left: 5px;
+	margin-right: 5px;
+	text-align: center;
+	height: 60px;
+	line-height: 60px;
+}
+.order-go{
+	color: #404040;
+	font-size: 12px;
+	margin-top: 40px;
+}
+.kd-popup{
+	width: 600px;
+	float: right;
+	text-align: right;
+	border: 1px solid #fca700;
+	background: #f2f7ff;
+	padding: 10px 15px 10px 10px;
+}
+.point-in{
+	margin-bottom: 20px;
+}
+.kd-popup ul li{
+		margin-bottom: 10px;
+}
+.btn-go{
+	display: inline-block;
+	width: 127px;
+	height: 36px;
+	outline: none;
+	border: 0;
+	cursor: pointer;
+	background-image: url(http://img04.taobaocdn.com/tps/i4/T1OF12XbxrXXXXXXXX-128-36.png);
+}
+.box{
+	position: absolute;
+	top:0;
+	left: 0;
+	z-index:999;
+	width: 100%;
+	height: 100%;
+	background: rgba(0,0,0,0.3);
+}
+.box_content{
+	box-sizing: border-box;
+	padding: 15px;
+	width: 300px;
+	margin: 200px auto;
+	background: white;
+}
+.box_content p{
+	margin-top: 10px;
+	margin-bottom: 10px;
+	font-size: 20px;
+}
+.box_content input{
+	width: 200px;
+	height: 25px;
+}
+.box_content button{
+	width: 205px;
+	height: 35px;
+	background: #f8296d;
+	color: white;
+	outline: none;
+	border: 0;
+	cursor: pointer;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}

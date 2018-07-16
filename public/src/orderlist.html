@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>订单管理</title>
+    <link rel="stylesheet" href="../stylesheets/orderlist.css">
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script>
+        function setShipNumber(orderId){
+            $('.page-container').prepend(`<div class="layer-shade">
+                                                        <div style="width: 50%;margin: 30px auto;background: white;">
+                                                            <div class="layer-title">订单发货 <a href="javascript:void(0)" class="fr">X</a></div>
+                                                                <div style="width: 60%;margin: 50px auto;">
+                                                                <div style="margin-bottom: 20px;"><span>&nbsp;&nbsp;订单编号：</span><span id="name">${orderId}</span></div>
+                                                                <div style="margin-bottom: 20px;"><i style="color: red;">* </i><span>物流单号：</span><input type="text"class="input" id="shipNumber"></div>
+                                                                <div style="padding-bottom: 50px;"><button class="btn-set" id="btn-set" >保存</button><button class="btn-set" id="btn-reset">取消</button></div>
+
+                                                            </div>
+                                                         </div>
+                                                 </div>`);
+            $('.layer-title a').on('click',function () {
+                $('.layer-shade').remove('.layer-shade');
+            })
+            $('#btn-reset').on('click',function () {
+                $('.layer-shade').remove('.layer-shade');
+            })
+            $('#btn-set').on('click',function(){
+                $.post('../setShipNumber',{
+                    'orderId':orderId,
+                    'shipNumber':$('#shipNumber').val()
+                },function(data,status){
+                    if(data.code == true){
+                        alert('发货成功');
+                        $('.layer-shade').remove('.layer-shade');
+                        orderPost('all');
+                    }else{
+                        alert('发货失败');
+                        orderPost('all');
+                    }
+                })
+            })
+
+        }
+        function orderPost(clickStatus){
+
+            $.post('../orderlist',{
+                'orderStatus':clickStatus
+            },function(data,status){
+                var orderList =data[0];
+                var productList = data[1];
+                var status ='';
+                $('.information-user').empty();
+                for(var i in orderList){
+                    for(var j in productList){
+                        if(orderList[i].product_id == productList[j].product_id){
+                            if(orderList[i].order_ship ==0){
+                                status = '待发货';
+                                $('.information-user').append(` <li style="width: 100%; font-size: 14px;margin-bottom: 8px;">
+                    <div style="margin-bottom: 30px;"><p class="fl"><span class="noship">${status}</span>&nbsp;&nbsp;&nbsp;&nbsp;订单编号:${orderList[i].order_id}</p></div>
+                    <div style="clear: both"></div>
+                    <div style="margin-bottom: 30px;">
+                        <div class="fl" style="width: 40%;height: 54px;overflow: hidden;"><a href="../product_detail?product_id=${productList[j].product_id}" target="_blank"><img style="width: 50px;height: 50px;" src="${productList[j].product_mainimg.substring(6)}" alt=""><p class="goodsname">${productList[j].product_name}</p></a></div>
+                        <div style="width: 20%;height: 54px;"class="fl"><span class="fl" style="line-height: 54px;text-align: center">用户：${orderList[i].user_name}</span></div>
+                        <div  class="fl" style="width: 20%;"><p style="color: red">单价：${productList[j].product_price}</p><p>实付：￥${orderList[i].order_money}</p><p>数量：${orderList[i].product_num}</p></div>
+                        <div  class="fl" style="width: 10%;">
+                            <a href="javascript:void(0);" class="btn-ship" onclick="setShipNumber(${orderList[i].order_id})" title="发货"  >发货</a>
+                        </div>
+                        <div style="clear: both;"></div>
+                    </div>
+                    <div style="clear: both;"></div>
+                    <div style="text-align: left;"><p>收货地址：${orderList[i].recipients},${orderList[i].phone},${orderList[i].fixedphone},${orderList[i].province} ${orderList[i].city} ${orderList[i].town} ${orderList[i].address}</p></div>
+                </li>`);
+                            }else{
+                                status = '已发货';
+                                $('.information-user').append(` <li style="width: 100%; font-size: 14px;margin-bottom: 8px;">
+                    <div style="margin-bottom: 30px;"><p class="fl"><span class="ship">${status}</span>&nbsp;&nbsp;&nbsp;&nbsp;订单编号:${orderList[i].order_id}</p></div>
+                    <div style="clear: both"></div>
+                    <div style="margin-bottom: 30px;">
+                        <div class="fl" style="width: 40%;height: 54px;overflow: hidden;"><a href="../product_detail?product_id=${productList[j].product_id}" target="_blank"><img style="width: 50px;height: 50px;" src="${productList[j].product_mainimg.substring(6)}" alt=""><p class="goodsname">${productList[j].product_name}</p></a></div>
+                        <div style="width: 20%;height: 54px;"class="fl"><span idths="fl" style="line-height: 54px;text-align: center">用户：${orderList[i].user_name}</span></div>
+                        <div  class="fl" style="width: 20%;"><p style="color: red">单价：${productList[j].product_price}</p><p>实付：￥${orderList[i].order_money}</p><p>数量：${orderList[i].product_num}</p></div>
+                        <div  class="fl" style="width: 10%;">
+                            <p title="查询物流信息请将物流单号复制到快递100进行查询">物流单号：${orderList[i].shipnumber}</p>
+                        </div>
+                        <div style="clear: both;"></div>
+                    </div>
+                    <div style="clear: both;"></div>
+                    <div style="text-align: left;"><p>收货地址：${orderList[i].recipients},${orderList[i].phone},${orderList[i].fixedphone},${orderList[i].province} ${orderList[i].city} ${orderList[i].town} ${orderList[i].address}</p></div>
+                </li>`);
+                            }
+
+                        }
+                    }
+                }
+            })
+        }
+        $(function(){
+            orderPost('all');
+            $('.wrap-nav .wrap-nav-tab li').on('click',function(){
+                $(this).addClass('tab_click').siblings().removeClass('tab_click');
+               orderPost($(this).attr('data-status'));
+            })
+            $('.btn-success').on('click',function(){
+                if($('.input-text').val()==''){
+                    alert('请输入订单号！');
+                    $('.input-text').val('');
+                }else{
+                    $.post('../orderSuccess',{
+                        'orderId':$('.input-text').val()
+                    },function(data,status){
+                        if(data.code == false){
+                            $('.information-user').empty();
+                            $('.information-user').append('<li style="width: 100%;height: 40px;text-align: center;line-height: 40px;color: #f8296d;font-size: 18px;">没有查询到订单</li>')
+                            $('.input-text').val('');
+                        }else{
+                            var orderList =data[0];
+                            var productList = data[1];
+                            var status ='';
+                            $('.information-user').empty();
+                            for(var i in orderList){
+                                for(var j in productList){
+
+                                    if(orderList[i].product_id == productList[j].product_id){
+                                        if(orderList[i].order_ship ==0){
+                                            status = '待发货';
+                                            $('.information-user').append(` <li style="width: 100%; font-size: 14px;margin-bottom: 8px;">
+                    <div style="margin-bottom: 30px;"><p class="fl"><span class="noship">${status}</span>&nbsp;&nbsp;&nbsp;&nbsp;订单编号:${orderList[i].order_id}</p></div>
+                    <div style="clear: both"></div>
+                    <div style="margin-bottom: 30px;">
+                        <div class="fl" style="width: 40%;height: 54px;overflow: hidden;"><a href="../product_detail?product_id=${productList[j].product_id}" target="_blank"><img style="width: 50px;height: 50px;" src="${productList[j].product_mainimg.substring(6)}" alt=""><p class="goodsname">${productList[j].product_name}</p></a></div>
+                        <div style="width: 20%;height: 54px;"class="fl"><span class="fl" style="line-height: 54px;text-align: center">用户：${orderList[i].user_name}</span></div>
+                        <div  class="fl" style="width: 20%;"><p style="color: red">单价：${productList[j].product_price}</p><p>实付：￥${orderList[i].order_money}</p><p>数量：${orderList[i].product_num}</p></div>
+                        <div  class="fl" style="width: 10%;">
+                            <a href="javascript:void(0);" title="发货" class="btn-ship" onclick="setShipNumber(${orderList[i].order_id})" >发货</a>
+                        </div>
+                        <div style="clear: both;"></div>
+                    </div>
+                    <div style="clear: both;"></div>
+                    <div style="text-align: left;"><p>收货地址：${orderList[i].recipients},${orderList[i].phone},${orderList[i].fixedphone},${orderList[i].province} ${orderList[i].city} ${orderList[i].town} ${orderList[i].address}</p></div>
+                </li>`);
+                                        }else{
+                                            status = '已发货';
+                                            $('.information-user').append(` <li style="width: 100%; font-size: 14px;margin-bottom: 8px;">
+                    <div style="margin-bottom: 30px;"><p class="fl"><span class="ship">${status}</span>&nbsp;&nbsp;&nbsp;&nbsp;订单编号:${orderList[i].order_id}</p></div>
+                    <div style="clear: both"></div>
+                    <div style="margin-bottom: 30px;">
+                        <div class="fl" style="width: 40%;height: 54px;overflow: hidden;"><a href="../product_detail?product_id=${productList[j].product_id}" target="_blank"><img style="width: 50px;height: 50px;" src="${productList[j].product_mainimg.substring(6)}" alt=""><p class="goodsname">${productList[j].product_name}</p></a></div>
+                        <div style="width: 20%;height: 54px;"class="fl"><span class="fl" style="line-height: 54px;text-align: center">用户：${orderList[i].user_name}</span></div>
+                        <div  class="fl" style="width: 20%;"><p style="color: red">单价：${productList[j].product_price}</p><p>实付：￥${orderList[i].order_money}</p><p>数量：${orderList[i].product_num}</p></div>
+                        <div  class="fl" style="width: 10%;">
+                            <p title="查询物流信息请将物流单号复制到快递100进行查询">物流单号：${orderList[i].shipnumber}</p>
+                        </div>
+                        <div style="clear: both;"></div>
+                    </div>
+                    <div style="clear: both;"></div>
+                    <div style="text-align: left;"><p>收货地址：${orderList[i].recipients},${orderList[i].phone},${orderList[i].fixedphone},${orderList[i].province} ${orderList[i].city} ${orderList[i].town} ${orderList[i].address}</p></div>
+                </li>`);
+                                        }
+
+                                    }
+                                }
+                            }
+                        }
+                    })
+                    $('.input-text').val('');
+                }
+            })
+
+        })
+    </script>
+</head>
+<body>
+<div>
+    位置：订单管理->订单列表
+</div>
+<div class="page-container">
+    <div class="text-c">
+        <input type="text" class="input-text" style="width:250px;border: 1px solid #3089dc;" placeholder="输入订单号" id="" name="">
+        <button class='btn-success'>搜订单</button>
+    </div>
+    <div class="wrap">
+        <div class="wrap-nav">
+            <ul class="wrap-nav-tab">
+                <li data-status="all" class="tab_click">全部订单</li>
+                <li data-status="0">未发货订单</li>
+                <li data-status="1">已发货订单</li>
+            </ul>
+            <ul class='information-user'>
+
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>

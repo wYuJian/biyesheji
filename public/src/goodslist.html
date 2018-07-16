@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>商品列表</title>
+    <link rel="stylesheet" href="../stylesheets/goodslist.css">
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script>
+        $(function(){
+            function goodsPost(isStatus){
+                $.post('../goodslist',{
+                    'status':isStatus
+                },function(data,status){
+                    if(data.code == false){
+                        $('.information-user').empty();
+                        $('.information-user').append('<li>还没有未上架的商品</li>')
+                    }else{
+                        $('.information-user').empty();
+                        data.forEach(function(goods){
+                            if(goods.product_status == 1){
+                                $('.information-user').append(`<li>
+                                <div class="fl li-div-02"><span>${goods.product_id}</span></div>
+                                <div class="fl li-div-03"><a href="../product_detail?product_id=${goods.product_id}" target="_blank" style="position: absolute;left: 30px;top: 13px;"><img style="width: 54px;height: 54px;" src="${goods.product_mainimg.substring(6)}" alt=""></a><p class="product-title"><a href="../product_detail?product_id=${goods.product_id}" target="_blank">${goods.product_name}</a></p></div>
+                                <div class="fl li-div-04"><span>${goods.product_price}</span></div>
+                                <div class="fl li-div-05"><span>${goods.product_stock}</span></div>
+                                <div class="fl li-div-06"><span>${goods.product_sales}</span></div>
+                                <div class="fl li-div-07"><span style="color: white;padding: 2px;font-size: 14px;border-radius: 5px;background: #5eb95e;display: inline-block;line-height: normal">已上架</span></div>
+                           </li>`);
+                            }else{
+                                $('.information-user').append(`<li>
+                                <div class="fl li-div-02"><span>${goods.product_id}</span></div>
+                                <div class="fl li-div-03"><a href="../product_detail?product_id=${goods.product_id}" target="_blank" style="position: absolute;left: 30px;top: 13px;"><img style="width: 54px;height: 54px;" src="${goods.product_mainimg.substring(6)}" alt=""></a><p class="product-title"><a href="../product_detail?product_id=${goods.product_id}" target="_blank">${goods.product_name}</a></p></div>
+                                <div class="fl li-div-04"><span>${goods.product_price}</span></div>
+                                <div class="fl li-div-05"><span>${goods.product_stock}</span></div>
+                                <div class="fl li-div-06"><span>${goods.product_sales}</span></div>
+                                <div class="fl li-div-07"><span style="color: white;padding: 2px;font-size: 14px;border-radius: 5px;background: red;display: inline-block;line-height: normal">仓库中</span></div>
+                           </li>`);
+                            }
+
+                        });
+                    }
+
+                })
+            }
+            goodsPost('all');
+            $('input:radio[name="status"]').on('click',function(){
+//                console.log($(this).val())
+               goodsPost($(this).val());
+            })
+            $('.btn-success').on('click',function(){
+                $.post('../goodsSuccess',{
+                    'txt':$('#txt').val()
+                },function(data,status){
+                    $('.information-user').empty();
+                    console.log(data);
+                    if(data.code == false){
+                        $('.information-user').empty();
+                        $('.information-user').append('<li>没有查询到商品！</li>')
+                    }else{
+                        $('.information-user').empty();
+                        data.forEach(function(goods){
+                                if(goods.product_status == 1){
+                                    $('.information-user').append(`<li>
+                                <div class="fl li-div-02"><span>${goods.product_id}</span></div>
+                                <div class="fl li-div-03"><a href="../product_detail?product_id=${goods.product_id}" target="_blank" style="position: absolute;left: 30px;top: 13px;"><img style="width: 54px;height: 54px;" src="${goods.product_mainimg.substring(6)}" alt=""></a><p class="product-title"><a href="../product_detail?product_id=${goods.product_id}" target="_blank">${goods.product_name}</a></p></div>
+                                <div class="fl li-div-04"><span>${goods.product_price}</span></div>
+                                <div class="fl li-div-05"><span>${goods.product_stock}</span></div>
+                                <div class="fl li-div-06"><span>${goods.product_sales}</span></div>
+                                <div class="fl li-div-07"><span style="color: white;padding: 2px;font-size: 14px;border-radius: 5px;background: #5eb95e;display: inline-block;line-height: normal">已上架</span></div>
+                           </li>`);
+                                }else{
+                                    $('.information-user').append(`<li>
+                                <div class="fl li-div-02"><span>${goods.product_id}</span></div>
+                                <div class="fl li-div-03"><a href="../product_detail?product_id=${goods.product_id}" target="_blank" style="position: absolute;left: 30px;top: 13px;"><img style="width: 54px;height: 54px;" src="${goods.product_mainimg.substring(6)}" alt=""></a><p class="product-title"><a href="../product_detail?product_id=${goods.product_id}" target="_blank">${goods.product_name}</a></p></div>
+                                <div class="fl li-div-04"><span>${goods.product_price}</span></div>
+                                <div class="fl li-div-05"><span>${goods.product_stock}</span></div>
+                                <div class="fl li-div-06"><span>${goods.product_sales}</span></div>
+                                <div class="fl li-div-07"><span style="color: white;padding: 2px;font-size: 14px;border-radius: 5px;background: red;display: inline-block;line-height: normal">仓库中</span></div>
+                           </li>`);
+                                }
+
+                            });
+
+                    }
+
+                });
+            })
+        })
+    </script>
+</head>
+<body>
+<div>
+    位置：商品管理->商品列表
+</div>
+<div class="page-container">
+    <div class="text-c">
+        <div class="fl">
+            <input type="radio"  name="status" value="all" checked="checked">全部商品
+            <input type="radio" name="status" value="1">销售中
+            <input type="radio" name="status" value="0">未上架
+        </div>
+        <input type="text" class="input-text" style="width:250px;border: 1px solid #3089dc;" placeholder="输入商品名称" id="txt" name="">
+        <button class='btn-success'>搜商品</button>
+    </div>
+    <div class="wrap">
+        <div class="wrap-nav">
+            <ul class="wrap-nav-tab">
+                <li style='width:90px;height:20px;'>商品编号</li>
+                <li style='width:410px;height:20px;'>商品名称</li>
+                <li style='width:90px;height:20px;'>价格</li>
+                <li style='width:90px;height:20px;'>库存</li>
+                <li style='width:110px;height:20px;'>销量</li>
+                <li style='width:100px;height:20px;'>状态</li>
+            </ul>
+            <div class="clear"></div>
+            <ul class='information-user'>
+
+            </ul>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

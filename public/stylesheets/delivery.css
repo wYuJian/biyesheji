@@ -1,0 +1,38 @@
+*{margin: 0;padding: 0;}
+ul{
+    list-style: none;
+}
+.fl{
+    float: left;
+}
+.fr{
+    float: right;
+}
+.head p{
+    width: 100%;
+    border-top: 2px solid #e33a3d;
+    color: #666;
+    font-size: 16px;
+    padding: 5px;
+}
+.wrap{
+    width: 500px;
+    margin: 20px auto;
+}
+input{
+    width: 200px;
+    height: 26px;
+}
+.wrap div{
+    margin-bottom: 10px;
+}
+#btn_up{
+    width: 80px;
+    height: 25px;
+    cursor: pointer;
+    background: #e61952;
+    outline: none;
+    color: white;
+    border: 0;
+    margin: 10px auto;
+}

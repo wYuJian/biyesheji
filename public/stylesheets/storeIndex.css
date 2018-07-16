@@ -1,0 +1,415 @@
+*{margin: 0;padding: 0;}
+ul{
+    list-style: none;
+}
+.wrapper{
+    width: 100%;
+    margin: 0 auto;
+}
+
+.fl{
+    float: left;
+}
+.fr{
+    float: right;
+}
+.top{
+    width: 90%;
+    margin: 10px auto;
+    font-size: 12px;
+    color: #777;
+}
+.to_top{
+    position: fixed;
+    cursor: pointer;
+    bottom: 30px;
+    right: 30px;
+    width: 40px;
+    height: 60px;
+    color: white;
+    text-align: center;
+    line-height: 60px;
+    background: #000;
+  }
+.top a{
+    display: block;
+    color: #777;
+}
+.rightContent{
+    width: 30%;
+}
+.leftContent{
+    width: 40%;
+    margin-left: 50px;
+}
+.leftContent span {
+    margin-right: 20px;
+}
+.rightContent ul li{
+    margin-left: 10px;
+}
+a{
+    display: inline-block;
+    text-decoration: none;
+}
+.herader{
+    width: 80%;
+    margin: 0 auto;
+}
+.logo{
+    position: absolute;
+    top: 50px;
+    width: 200px;
+    height: 100px;
+    background: url(../images/logo.jpg) no-repeat -110px -110px;
+}
+#search{
+    width: 600px;
+    margin: 55px auto;
+}
+#search #searchBg{
+    width: 100%;
+    height: 38px;
+}
+#search input{
+    padding-left: 30px;
+    display: inline-block;
+    font-size: 14px;
+    border: 3px solid #e61952;
+    width: 415px;
+    height: 32px;
+    outline: none;
+}
+#search .search_btn{
+    width: 100px;
+    height: 38px;
+    padding: 0;
+    border: none;
+    margin: 0;
+    background: #e61952;
+    outline: none;
+    color: white;
+}
+#search ul li a{
+    margin-right: 10px;
+    font-size: 12px;
+    color: #777;
+}
+#nav{
+    width: 100%;
+    height: 40px;
+    background: #e61952;
+    color: white;
+}
+#nav ul{
+    width: 75%;
+    margin: 0 auto;
+}
+#nav li{
+    text-align: center;
+    line-height: 40px;
+    margin-left: 30px;
+}
+.banner{
+    position: relative;
+    width: 100%;
+    height: 456px;
+    background: #938548;
+}
+.banner .banner_img{
+    position: relative;
+    width: 1011px;
+    /*display: inline-block;*/
+    margin: 0 auto;
+}
+.banner_img li{
+
+    position: absolute;
+}
+.banner_img li img{
+    width: 1011px;
+    height: 456px;
+}
+.banner .banner_list{
+    padding: 10px;
+    position: absolute;
+    top: 10px;
+    left: 960px;
+    background: rgba(255,255,255,0.4);
+    width: 190px;
+}
+.banner .banner_list li,.banner .banner_list li img{
+    margin-bottom: 10px;
+    width: 190px;
+    height: 94px;
+}
+.tab_menu{
+    width: 446px;
+    height: 46px;
+    font-size: 16px;
+    background: #f8296d;
+    margin: 0 auto;
+    margin-bottom: 10px;
+}
+.tab_menu li{
+    text-align: center;
+    line-height: 46px;
+    width: 446px;
+    height: 46px;
+    display: inline-block;
+    color: white;
+}
+.home_ad_list{
+    width: 1114px;
+    margin: 0 auto;
+}
+.home_ad_list ul li{
+    display: inline-block;
+    width: 535px;
+    height: 212px;
+    /*background: pink;*/
+    border-top: 2px solid black;
+    margin: 0 5px 5px 0;
+}
+.home_ad_list ul li a{
+    position: relative;
+    width: 535px;
+    height: 212px;
+    display: inline-block;
+}
+.home_ad_list ul li img{
+    width: 212px;
+    height: 212px;
+}
+.home_ad_list_h3{
+    position: absolute;
+    top: 30px;
+    width: 300px;
+    height: 30px;
+    overflow: hidden;
+    color: #777777;
+    font-size: 22px;
+    font-weight: 400;
+    text-align: center;
+    margin-left: 10px;
+    display: inline-block;
+}
+.home_ad_list_em{
+    position: absolute;
+    top: 90px;
+    font-style: normal;
+    width: 300px;
+    color: #f8296d;
+    font-size: 18px;
+    font-weight: 800;
+    margin-left: 10px;
+    text-align: center;
+    display: inline-block;
+}
+.home_ad_list_span{
+    position: absolute;
+    top: 150px;
+    width: 300px;
+    height: 40px;
+    color: white;
+    margin-left: 10px;
+    text-align: center;
+    line-height: 40px;
+    background: #f8296d;
+    display: inline-block;
+}
+.home_ad_list_p{
+    position: absolute;
+    top: 0;
+    display: inline-block;
+    width: 54px;
+    height: 54px;
+    background: url(http://www.lingshi.com/templates/default/images/head.png) -382px -400px no-repeat;
+}
+.floor_must_see {
+    background: url(http://a5.jmstatic.com/c9533ddc6b064f8f/old_top_tit.jpg) center top no-repeat;
+}
+.floor_item_title {
+    /*background: url(http://a1.jmstatic.com/2c00c57fb65084ea/new_home_tit.jpg) no-repeat;*/
+    width: 100%;
+    height: 28px;
+    text-indent: -9999px;
+    overflow: hidden;
+    margin: 20px 0;
+}
+.today_later_main{
+    width: 1090px;
+    margin: 0 auto;
+}
+.today_tab_content{
+    width: 1090px;
+    height: 350px;
+    background: #666;
+    margin-bottom: 5px;
+}
+.layout_1090{
+    width: 1090px;
+    margin: 10px auto;
+}
+.today_deal_tit{
+    width: 203px;
+    height: 27px;
+    background: url(http://www.lingshi.com/templates/default/images/head.png) #f7f7f7 0 -379px no-repeat;
+}
+.today_new_productlist{
+    width: 100%;
+    margin-top: 20px;
+}
+.newdeal_box img{
+    width: 350px;
+    height: 350px;
+}
+.newdeal_box{
+    width: 350px;
+    height: 350px;
+    /*background: red;*/
+    float: left;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+.newdeal_box a{
+    position: relative;
+    width: 350px;
+    height: 350px;
+}
+.newdeal_box_h3{
+    position:absolute;
+    width: 300px;
+    height: 60px;
+    padding: 10px 25px;
+    color: #333333;
+    background: rgba(255,255,255,0.6);
+    text-align: center;
+    top: 230px;
+    overflow: hidden;
+}
+.newdeal_box_em{
+    position:absolute;
+    bottom: 0;
+    font-style: normal;
+    font-size: 18px;
+    font-weight: 700;
+    width: 350px;
+    height: 40px;
+    color: #ed145b;
+    background: rgba(255,255,255,0.6);
+    text-align: center;
+    left: 0;
+}
+.footer{
+    width: 100%;
+}
+.footer_top{
+    width: 100%;
+}
+.footer_top .footer_con{
+    width: 1090px;
+    margin: 0 auto;
+}
+.footer_con a{
+    padding: 20px 10px;
+    display: inline-block;
+    width: 80px;
+    height: 40px;
+    /*background: #b7fdf5;*/
+    margin-left: 10px;
+}
+.footer_con a img{
+    width: 80px;
+    height: 40px;
+}
+.footer_top_sen{
+    width: 100%;
+}
+.footer_links{
+    width: 1065px;
+    height: 55px;
+    margin: 80px auto;
+    background: url(http://www.lingshi.com/templates/default/images/service.png);
+}
+.title{
+    font-size: 22px;
+    font-weight: 550;
+
+}
+.tel{
+    width: 233px;
+    height: 121px;
+    margin: 20px auto;
+    background:url(http://www.lingshi.com/templates/default/images/head.png) 0 -653px no-repeat
+}
+.links_er_box{
+    width: 251px;
+    height: 146px;
+}
+.clear{
+    clear: both;
+}
+.footer_dy{
+    width: 100%;
+    background: url(http://a1.jmstatic.com/07c1f8519c836ade/footer_dy.jpg) center center no-repeat;
+}
+.footer_dy .play_box{
+    width: 360px;
+    height: 95px;
+    margin: 0 auto;
+}
+.footer_center{
+    width: 100%;
+    background:url(http://a1.jmstatic.com/b8eb8e59f67968ee/footer_btm02_bg.jpg) center top repeat-x
+
+}
+.footer_center div{
+    width: 1090px;
+    margin: 0 auto;
+    height: 48px;
+}
+.footer_center div a{
+    display: inline-block;
+    margin-left: 20px;
+    color: white;
+    text-align: center;
+    line-height: 48px;
+    height: 48px;
+    font-size: 14px;
+}
+.footer_copyright{
+    width: 100%;
+    height: 214px;
+    background: url(http://a3.jmstatic.com/9fab7638c2b22895/newindex_footer_bg.png) #404040 center top repeat-x;
+}
+.footer_copy_con{
+    /*display: inline-block;*/
+    color: #ccc;
+    width: 1090px;
+    height: 78px;
+    margin: 0 auto;
+    font-size: 14px;
+}
+.footer_copyright p{
+    width: 1090px;
+    margin: 0 auto;
+}
+.footer_copy_logo{
+    display: inline-block;
+    width: 126px;
+    height: 50px;
+    background: url(http://a4.jmstatic.com/a6195c982dae0cec/footer_btm_icon.png) no-repeat;
+}
+.logo02{
+    background-position: -126px 0;
+}
+.logo03{
+    background-position: -252px 0;
+}
+.logo04{
+    background-position: -378px 0;
+}
+.logo05{
+    background-position: -504px 0;
+}

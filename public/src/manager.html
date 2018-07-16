@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    <script>
+        $(function () {
+//            $("#btn_add").click(function(){
+//                var productId = $("#product_id").val();
+//                var productName = $("#product_name").val();
+//                var productPrice = $("#product_price").val();
+//                var product_stock = $("#product_stock").val();
+//                var product_desc = $("#product_desc").val();
+//                $.post("../manager_product_add",{
+//                    "product_id":productId,
+//                    "product_name":productName,
+//                    "product_price":productPrice,
+//                    "product_stock":product_stock,
+//                    "product_desc":product_desc
+//                },function(data,status){
+//                    alert(data);
+//                })
+//            })
+
+            $("#btn_query").click(function(){
+                $.post("../manager_product_query",function(data,status){
+                    var productList = JSON.parse(data);
+                    console.log(productList);
+                    $("#query_list").empty();
+                    for(var product of productList){
+                        $("#query_list").append(`<li><input type="checkbox"></input>编号：${product.product_id}
+                            名称：${product.product_name}
+                            价格：${product.product_price}
+                            库存：${product.product_stock}
+                            描述：${product.product_desc}
+                        </li>`);
+                    }
+                })
+            })
+        })
+
+    </script>
+</head>
+<body>
+
+    <div>
+        <h3>商品模块</h3>
+        <p>增加</p>
+        <!--<input type="text" placeholder="编号" id="product_id">-->
+        <!--<input type="text" placeholder="名称" id="product_name">-->
+        <!--<input type="text" placeholder="价格" id="product_price">-->
+        <!--<input type="text" placeholder="库存" id="product_stock">-->
+        <!--<input type="text" placeholder="描述" id="product_desc">-->
+        <!--<button id="btn_add">添加</button>-->
+
+        <form action="../manager_product_add" enctype="multipart/form-data" method="post">
+            <input type="text" placeholder="编号" name="product_id">
+            <input type="text" placeholder="名称" name="product_name">
+            <input type="text" placeholder="价格" name="product_price">
+            <input type="text" placeholder="库存" name="product_stock">
+            <input type="text" placeholder="描述" name="product_desc">
+            <p>上传图片</p><input type="file" name="img_upload" multiple="multiple" >
+            <input type="submit" value="添加" >
+        </form>
+    </div>
+    <div>
+        <p>查询</p>
+        <ul id="query_list"></ul>
+        <button id="btn_query">查询</button>
+    </div>
+</body>
+</html>

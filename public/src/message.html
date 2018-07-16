@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../stylesheets/message.css">
+    <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    <script>
+        $(function () {
+            var userName='';
+            $.post('../cookies',function(data,status) {
+                if (data != '') {
+                    userName = data.username;
+                } else {
+                }
+            });
+            $('#btn_submit').on('click',function(){
+                if($('input[name="mes_style"]:checked').val()=='投诉'){
+                    $.post('../complaints',{
+                        'username':userName,
+                        'mes_type':$('input[name="mes_style"]:checked').val(),
+                        'mes_subject':$('.mes_subject input').val(),
+                        'mes_content':$('.mes_content textarea').val(),
+                        'mes_phone':$('.mes_phone input').val()
+                    },function(data,status){
+                        var dataJson = JSON.parse(data);
+                        if(dataJson.code){
+                            alert('投诉成功！')
+                        }
+                    })
+                }else{
+                    $.post('../message',{
+                        'username':userName,
+                        'mes_type':$('input[name="mes_style"]:checked').val(),
+                        'mes_subject':$('.mes_subject input').val(),
+                        'mes_content':$('.mes_content textarea').val(),
+                        'mes_phone':$('.mes_phone input').val()
+                    },function(data,status){
+                        var dataJson = JSON.parse(data);
+                        if(dataJson.code){
+                            alert('留言成功！')
+                        }
+                    })
+                }
+
+            })
+        })
+    </script>
+</head>
+<!--会员留言-->
+<body>
+<div class="head"><p>我的留言</p></div>
+<div class="mes">
+    <div class="mes_type">
+        <span>留言类型：</span>
+        <input type="radio" name='mes_style' value='留言' checked='true'>留言
+        <input type="radio" name='mes_style' value='投诉'>投诉
+        <input type="radio" name='mes_style' value='询问'>询问
+        <input type="radio" name='mes_style' value='售后'>售后
+    </div>
+    <div class="mes_subject">
+        <span>留言主题：</span>
+        <input type="text">
+    </div>
+    <div class="mes_content">
+        <span>留言内容：</span>
+        <textarea cols='40' row='5' wrap='virtual'></textarea>
+    </div>
+    <div class="mes_phone">
+        <span>联系号码：</span>
+        <input type="text">
+    </div>
+    <button id="btn_submit">提交</button>
+</div>
+</body>
+</html>

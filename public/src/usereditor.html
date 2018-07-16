@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>会员列表</title>
+    <link rel="stylesheet" href="../stylesheets/usereditor.css">
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="//at.alicdn.com/t/font_399103_27fdwh2enp2jra4i.js"></script>
+    <script src="http://cdn.bootcss.com/blueimp-md5/1.1.0/js/md5.js"></script>
+    <script>
+        function postUsereditor(){
+            $('.information-user').empty();
+            $.post('../usereditor',function(data,status){
+                data.forEach(function(users){
+                    if(users.user_status == 1){
+                        $('.information-user').append(`<li>
+                                       <div class="span-01"><span>${users.id}</span></div>
+                                       <div class="span-02"><span >${users.username}</span></div>
+                                       <div class="span-03"><span >${users.user_true_name}</span></div>
+                                       <div class="span-04"><span >${users.user_sex}</span></div>
+                                       <div class="span-05"><span >${users.phonenum}</span></div>
+                                       <div class="span-06"><span >${users.user_email}</span></div>
+                                       <div class="span-07"><span ><p class="using">已启用</p></span></div>
+                                       <div class="span-08">
+                                            <a href="javascript:void(0)" onclick="up_status($(this).attr('data-id'),$(this).attr('title'))" data-id="${users.id}" title="禁用" id="jinyong">
+                                                <svg class="icon" aria-hidden="true">
+                                                    <use xlink:href="#icon-jinyong"></use>
+                                                </svg>
+                                            </a>
+                                            <a href="javascript:void(0)" onclick="up_info($(this).attr('data-str'))" data-str="${users.username}" title="编辑">
+                                                <svg class="icon" aria-hidden="true">
+                                                         <use xlink:href="#icon-bianji"></use>
+                                                </svg>
+                                           </a>
+                                            <a href="javascript:void(0)" onclick="up_pwd($(this).attr('data-str'))" data-str="${users.username}" title="修改密码">
+                                            <svg class="icon" aria-hidden="true">
+                                                 <use xlink:href="#icon-xiugaimima"></use>
+                                               </svg>
+                                        </a>
+                                       </div>
+                                        </li>`);
+                    }else{
+                        $('.information-user').append(`<li>
+                                       <div  class="span-01"><span>${users.id}</span></div>
+                                       <div class="span-02"><span >${users.username}</span></div>
+                                       <div class="span-03"><span >${users.user_true_name}</span></div>
+                                       <div class="span-04"><span >${users.user_sex}</span></div>
+                                       <div class="span-05"><span >${users.phonenum}</span></div>
+                                       <div class="span-06"><span >${users.user_email}</span></div>
+                                       <div class="span-07"><span ><p class="nousing">已禁用</p></span></div>
+                                       <div class="span-08">
+                                            <a href="javascript:void(0)" onclick="up_status($(this).attr('data-id'),$(this).attr('title'))" data-id="${users.id}" title="启用" id="qiyong">
+                                                <svg class="icon" aria-hidden="true" >
+                                                    <use xlink:href="#icon-qiyong"></use>
+                                                </svg>
+                                            </a>
+                                            <a href="javascript:void(0)" onclick="up_info($(this).attr('data-str'))" data-str="${users.username}" title="编辑">
+                                                <svg class="icon" aria-hidden="true">
+                                                         <use xlink:href="#icon-bianji"></use>
+                                                </svg>
+                                           </a>
+                                            <a href="javascript:void(0)" onclick="up_pwd($(this).attr('data-str'))" data-str="${users.username}" title="修改密码">
+                                            <svg class="icon" aria-hidden="true">
+                                                 <use xlink:href="#icon-xiugaimima"></use>
+                                               </svg>
+                                        </a>
+                                       </div>
+                                        </li>`);
+                    }
+                })
+            })
+        }
+        function  up_status(id,statusText) {
+            $('.page-container').prepend(`<div class="layer-shade">
+                                            <div style="width:30%;margin: 30px auto;background: white;">
+                                             <div class="layer-title">提示信息 <a href="javascript:void(0)" class="fr">X</a></div>
+                                             <div style="width: 60%;margin:30px auto;">
+                                             <p style="color: red;margin-bottom: 10px;font-weight: 500;font-size: 18px;">确定修改？</p>
+                                             <div style="padding-bottom: 50px;">
+                                              <button class="btn-add" id="btn-sure" >保存</button>
+                                              <button class="btn-add" id="btn-reset">取消</button>
+                                              </div>
+                                              </div>
+                                              </div>
+                                       </div>`);
+            $('#btn-sure').on('click',function(){
+                var userStatus=1;
+                if(statusText == '禁用'){
+                    userStatus = 0;
+                }
+                if(statusText == '启用'){
+                    userStatus = 1;
+                }
+                $.post('../up_user_status',{
+                    'userId':id,
+                    'userStatus':userStatus
+                },function(data,status){
+                    alert('修改成功！');
+                    postUsereditor();
+                    $('.layer-shade').remove('.layer-shade');
+                });
+            })
+            $('#btn-reset').on('click',function(){
+                $('.layer-shade').remove('.layer-shade');
+            })
+            $('.layer-title a').on('click',function(){
+                $('.layer-shade').remove('.layer-shade');
+            })
+        }
+        function up_pwd (name) {
+            $('.page-container').prepend(`<div class="layer-shade">
+                                                        <div style="width: 50%;margin: 30px auto;background: white;">
+                                                            <div class="layer-title">修改密码 <a href="javascript:void(0)" class="fr">X</a></div>
+                                                                <div style="width: 60%;margin: 50px auto;">
+                                                                <div style="margin-bottom: 20px;"><i style="color: red;">* </i><span>用&nbsp;&nbsp;户&nbsp;&nbsp;名：</span><span id="name">${name}</span></div>
+                                                                <div style="margin-bottom: 20px;"><i style="color: red;">* </i><span>新&nbsp;&nbsp;密&nbsp;&nbsp;码：</span><input type="password"class="input" id="pwd"></div>
+                                                                <div style="margin-bottom: 20px;"><i style="color: red;">* </i><span>确认密码：</span><input type="password" class="input" id="phone"></div>
+                                                                <div style="padding-bottom: 50px;"><button class="btn-add" id="btn-up" >保存</button></div>
+                                                            </div>
+                                                         </div>
+                                                 </div>`);
+
+            $('.layer-title a').on('click',function () {
+                $('.layer-shade').remove('.layer-shade');
+            })
+            $('#btn-up').on('click',function(){
+                if($('#pwd').val()!=''&& $('#phone').val()!=''){
+                    if($('#pwd').val()==$('#phone').val()){
+                        $.post('../userEditor_up_pwd',{
+                            'username':$('#name').text(),
+                            'new_pwd':md5($('#pwd').val())
+                        },function(data,status){
+                            if(data.code == true){
+                                alert('保存成功！');
+                            }else{
+                                alert('新密码不能和原密码相同！');
+                            }
+                        })
+                    }else {
+                        alert('两次密码不一样！')
+                    }
+                }else{
+                    alert('密码不能为空！')
+                }
+
+
+            })
+        }
+        function up_info(name){
+            $.post('../userlist',{
+                'username':name
+            },function(data,status){
+                $('.page-container').prepend(`<div class="layer-shade">
+                                                        <div style="width: 50%;margin: 30px auto;background: white;">
+                                                            <div class="layer-title">修改用户信息 <a href="javascript:void(0)" class="fr">X</a></div>
+                                                                <div style="width: 60%;margin: 50px auto;">
+                                                                <div style="margin-bottom: 20px;"><i style="color: red;">* </i><span>用户编号：</span><span id="uId">${data[0].id}</span></div>
+                                                                <div style="margin-bottom: 20px;"><i style="color: red;">* </i><span>用&nbsp;&nbsp;户&nbsp;&nbsp;名：</span><span id="name">${name}</span></div>
+                                                                <div style="margin-bottom: 20px;"><i style="color: red;">* </i><span>手&nbsp;&nbsp;机&nbsp;&nbsp;号：</span><input type="text"class="input" id="phone" value="${data[0].phonenum}"></div>
+                                                                <div style="margin-bottom: 20px;"><i style="color: red;">* </i><span>地&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;址：</span><input type="text" class="input" id="address" value="${data[0].user_address}"></div>
+                                                                <div style="margin-bottom: 20px;"><i style="color: red;">* </i><span>性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别：</span><input type="radio" name="sex" value="男" checked="checked">男<input type="radio" name="sex" value="女">女</div>
+                                                                <div style="margin-bottom: 20px;"><i style="color: red;">* </i><span>Q&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Q：</span><input type="text" class="input" id="tQQ" value="${data[0].user_qq}"></div>
+                                                                <div style="margin-bottom: 20px;"><i style="color: red;">* </i><span>邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱：</span><input type="text" class="input" id="email" value="${data[0].user_email}"></div>
+                                                                <div style="margin-bottom: 20px;"><i style="color: red;">* </i><span>家庭电话：</span><input type="text" class="input" id="famil_phone"value="${data[0].user_famil_phone}"></div>
+                                                                <div style="padding-bottom: 50px;"><button class="btn-add" id="btn-up" >保存</button></div>
+                                                            </div>
+                                                         </div>
+                                                 </div>`);
+                $('.layer-title a').on('click',function () {
+                    $('.layer-shade').remove('.layer-shade');
+                })
+                $('.btn-add').on('click',function(){
+                    $.post('../userEditorUpData',{
+                        'username':$('#name').text(),
+                        'phone':$('#phone').val(),
+                        'address':$('#address').val(),
+                        'sex':$('input[name="sex"]:checked').val(),
+                        'tQQ':$('#tQQ').val(),
+                        'email':$('#email').val(),
+                        'familPhone':$('#famil_phone').val()
+                    },function(data,status){
+                        console.log(data.code);
+                        if(data.code == true){
+                            alert('保存成功！');
+                        }
+                    });
+
+                })
+            })
+
+
+        }
+        $(function(){
+            postUsereditor();
+            $('.btn-success').on('click',function(){
+                $.post('../usereditor',{
+                    'username':$('.input-text').val()
+                },function(data,status){
+                    $('.information-user').empty();
+                    if(data.code == false){
+                        $('.information-user').append('<li class="nouser">用户不存在，请确认用户名是否正确！</li>')
+                    }else{
+                        data.forEach(function(users){
+                            if(users.user_status == 1){
+                                $('.information-user').append(`<li>
+                                       <div class="span-01"><span>${users.id}</span></div>
+                                       <div class="span-02"><span >${users.username}</span></div>
+                                       <div class="span-03"><span >${users.user_true_name}</span></div>
+                                       <div class="span-04"><span >${users.user_sex}</span></div>
+                                       <div class="span-05"><span >${users.phonenum}</span></div>
+                                       <div class="span-06"><span >${users.user_email}</span></div>
+                                       <div class="span-07"><span ><p class="using">已启用</p></span></div>
+                                       <div class="span-08">
+                                            <a href="javascript:void(0)"  onclick="up_status($(this).attr('data-id'),$(this).attr('title'))" data-id="${users.id}" title="禁用" id="jinyong">
+                                                <svg class="icon" aria-hidden="true">
+                                                    <use xlink:href="#icon-jinyong"></use>
+                                                </svg>
+                                            </a>
+                                            <a href="javascript:void(0)" onclick="up_info($(this).attr('data-str'))" data-str="${users.username}" title="编辑">
+                                                <svg class="icon" aria-hidden="true">
+                                                         <use xlink:href="#icon-bianji"></use>
+                                                </svg>
+                                           </a>
+                                            <a href="javascript:void(0)" onclick="up_pwd($(this).attr('data-str'))" data-str="${users.username}" title="修改密码">
+                                            <svg class="icon" aria-hidden="true">
+                                                 <use xlink:href="#icon-xiugaimima"></use>
+                                               </svg>
+                                        </a>
+                                       </div>
+                                        </li>`);
+                            }else{
+                                $('.information-user').append(`<li>
+                                       <div class="span-01"><span>${users.id}</span></div>
+                                       <div class="span-02"><span >${users.username}</span></div>
+                                       <div class="span-03"><span >${users.user_true_name}</span></div>
+                                       <div class="span-04"><span >${users.user_sex}</span></div>
+                                       <div class="span-05"><span >${users.phonenum}</span></div>
+                                       <div class="span-06"><span >${users.user_email}</span></div>
+                                       <div class="span-07"><span ><p class="nousing">已禁用</p></span></div>
+                                       <div class="span-08">
+                                            <a href="javascript:void(0)" onclick="up_status($(this).attr('data-id'),$(this).attr('title'))" data-id="${users.id}" title="启用" id="qiyong">
+                                                <svg class="icon" aria-hidden="true">
+                                                    <use xlink:href="#icon-qiyong"></use>
+                                                </svg>
+                                            </a>
+                                            <a href="javascript:void(0)" onclick="up_info($(this).attr('data-str'))" data-str="${users.username}" title="编辑">
+                                                <svg class="icon" aria-hidden="true">
+                                                         <use xlink:href="#icon-bianji"></use>
+                                                </svg>
+                                           </a>
+                                            <a href="javascript:void(0)" onclick="up_pwd($(this).attr('data-str')" data-str="${users.username}"  title="修改密码">
+                                            <svg class="icon" aria-hidden="true">
+                                                 <use xlink:href="#icon-xiugaimima"></use>
+                                               </svg>
+                                        </a>
+                                       </div>
+                                        </li>`);
+                            }
+                        })
+                    }
+                })
+
+            })
+
+           $('.btn-addUser').on('click',function(){
+                $('.page-container').prepend(`<div class="layer-shade">
+                                                        <div style="width: 50%;margin: 30px auto;background: white;">
+                                                            <div class="layer-title">添加用户 <a href="javascript:void(0)" class="fr">X</a></div>
+                                                                <div style="width: 60%;margin: 50px auto;">
+                                                                <div style="margin-bottom: 20px;"><i style="color: red;">* </i><span>用户名：</span><input type="text" class="input" id="name"></div>
+                                                                <div style="margin-bottom: 20px;"><i style="color: red;">* </i><span>密&nbsp;&nbsp;&nbsp;码：</span><input type="password"class="input" id="pwd"></div>
+                                                                <div style="margin-bottom: 20px;"><i style="color: red;">* </i><span>手机号：</span><input type="text" class="input" id="phone"></div>
+                                                                <div style="padding-bottom: 50px;"><button class="btn-add" >提交</button></div>
+                                                            </div>
+                                                         </div>
+                                                 </div>`);
+
+                $('.layer-title a').on('click',function () {
+                    $('.layer-shade').remove('.layer-shade');
+                })
+                $('.btn-add').on('click',function(){
+                    $.post('../login',{
+                        'username':$('#name').val(),
+                        'password':$('#pwd').val(),
+                        'phonenum':$('#phone').val()
+                    },function(data,status){
+                            alert(data);
+                    })
+                })
+            })
+
+
+        })
+    </script>
+</head>
+<body>
+<div>
+    位置：会员管理->会员编辑
+</div>
+
+<div class="page-container">
+    <div class="text-c">
+        <input type="button" value="+添加用户" class="btn-addUser">
+        <input type="text" class="input-text" style="width:250px;border: 1px solid #3089dc;" placeholder="输入会员名" id="" name="">
+        <button class='btn-success'>搜用户</button>
+    </div>
+    <div class="wrap">
+        <div class="wrap-nav">
+            <ul class="nav-tab">
+                <li style='width:80px;height:20px;'>ID</li>
+                <li style='width:110px;height:20px;'>用户名</li>
+                <li style='width:100px;height:20px;'>实名</li>
+                <li style='width:60px;height:20px;'>性别</li>
+                <li style='width:120px;height:20px;'>手机</li>
+                <li style='width:160px;height:20px;'>邮箱</li>
+                <li style='width:85px;height:20px;'>账号状态</li>
+                <li style="width: 150px;height: 20px;">操作</li>
+            </ul>
+            <ul class='information-user'>
+
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>

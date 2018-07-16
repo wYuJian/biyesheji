@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>个人中心</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    <style>
+      .tab_list{
+        list-style: none;
+        float: left;
+        margin-left: 20px;
+      }
+      .content{
+        width: 100px;
+        height: 20px;
+      }
+    </style>
+    <script>
+      $(function () {
+          var urls = ['/order/allOrder','/order/waitOrder','/order/payOrder'];
+          $('.tab_list').on('click',function(){
+              $.get(`${urls[$(this).index()]}`,function(data,status){
+                  $('.content').html(data)
+              })
+          })
+
+      })
+
+    </script>
+  </head>
+  <body>
+      <div class="item_list">
+        <ul>
+          <li class="tab_list">全部订单</li>
+          <li class="tab_list">等待付款</li>
+          <li class="tab_list">已支付</li>
+        </ul>
+        <div class="content">
+
+        </div>
+      </div>
+  </body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>后台管理</title>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <style>
+        *{margin: 0;padding: 0;}
+        li{
+            list-style: none;
+        }
+        .fl{
+            float: left;
+        }
+        .fr{
+            float: right;
+        }
+        .header{
+            width: 100%;
+        }
+        .header .logo{
+            width: 1000px;
+            margin: 10px auto;
+            height: 76px;
+            font-family: '楷体';
+            font-weight: 600;
+            font-size: 24px;
+            line-height: 76px;
+            padding-left: 171px;
+            background: url(../images/logo.jpg) no-repeat -110px -110px;
+        }
+        .cl li{
+            font-size: 14px;
+        }
+        .cl li span{
+            display: inline-block;
+            line-height: 76px;
+        }
+        .menu{
+            display: none;
+            cursor: pointer;
+            position: absolute;
+            width: 70px;
+            top: 60px;
+            z-index: 6;
+            background-color: white;
+            border: solid 1px #f2f2f2;
+        }
+        .menu p{
+            width: 70px;
+            text-align: center;
+            float: left;
+            height: 25px;
+            line-height: 25px;
+        }
+
+        .clear{
+            height: 1px;
+            clear: both;
+        }
+        .hui-aside{
+            position: absolute;
+            display: block;
+            top: 86px;
+            bottom: 0;
+            left: 0;
+            padding-top: 10px;
+            width: 199px;
+            z-index: 99;
+            overflow: auto;
+            background-color: rgba(238,238,238,0.98);
+            border-right: 1px solid #e5e5e5;
+        }
+        .menu_dropdown{
+            margin-top: 20px;
+            font-size: 20px;
+            text-align: center;
+        }
+        .menu_dropdown h5{
+            width:199px;
+            line-height: 28px;
+            color: #333;
+            font-weight: normal;
+            font-size: 18px;
+            cursor: pointer;
+
+        }
+        .btn-slide {
+            background: #f3f3f3 url(http://www.lingshi.com/templates/default/images/arrow_gray.png) 185px 9px no-repeat;
+        }
+        .panel{
+            width: 199px;
+            text-align: center;
+            line-height: 28px;
+            color: #666666;
+            font-size: 14px;
+        }
+        .panel li a{
+            color: #666666;
+        }
+    </style>
+    <script>
+        window.onload = function(){
+            var user = document.querySelector('#user');
+            var menu = document.querySelector('.menu');
+            user.onmouseover = function(){
+                menu.style.display='block';
+            }
+            user.onmouseout = function(){
+                menu.style.display='none';
+            }
+        }
+
+    </script>
+</head>
+<body>
+<div class="header">
+    <div class="logo">
+        <span>管理系统</span>
+        <div class='fr'>
+            <ul class='cl'>
+                <li class='fl'>管理员：</li>
+                <li class='fl' id='user'>
+                    <span>admin</span>
+                    <div class='menu'>
+                        <p>个人信息</p>
+                        <p>切换账户</p>
+                        <p>退出</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<aside class='hui-aside'>
+    <div class='menu_dropdown'>
+        <h5 class='btn-slide'>会员管理</h5>
+        <ul class=' panel'>
+            <li><a href="userlist.html" onclick='return false' target='userlist'>会员列表</a></li>
+            <li><a href="usereditor.html" onclick='return false' target='usereditor'>编辑会员</a></li>
+        </ul>
+        <h5 class='btn-slide'>商品管理</h5>
+        <ul class='panel'>
+            <li><a href="goodslist.html" onclick='return false' target='goodslist'>商品列表</a></li>
+            <li><a href="editorgoods.html" onclick='return false' target='editorgoods'>编辑商品</a></li>
+        </ul>
+        <h5 class='btn-slide'>订单管理</h5>
+        <ul class='panel'>
+            <li><a href="orderlist.html" onclick='return false' target='orderlist'>订单列表</a></li>
+        </ul>
+        <h5 class='btn-slide'>反馈处理</h5>
+        <ul class='panel'>
+            <li><a href="userComplaints.html" onclick='return false' target='userComplaints'>投诉信息</a></li>
+            <li><a href="userMessage.html" onclick='return false' target='userMessage'>留言信息</a></li>
+        </ul>
+    </div>
+</aside>
+<iframe class='fr' src="userlist.html" frameborder="0" width='84.7%' height='1000px' scrolling="no" name='userlist'></iframe>
+<script>
+    $(function(){
+        $(".btn-slide").click(function(event) {
+            // var index= $(this).index();
+            $(this).next(".panel").slideToggle('fast',"linear",1000);
+        });
+        $(".panel li a").click(function(event) {
+            // console.log(event.target);
+            $("iframe").attr('src', event.target);
+        });
+    })
+</script>
+</body>
+</html>

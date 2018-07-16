@@ -1,0 +1,46 @@
+*{margin: 0;padding: 0;}
+ul{
+    list-style: none;
+}
+.fl{
+    float: left;
+}
+.fr{
+    float: right;
+}
+.head p{
+    width: 100%;
+    background: #ffd6ba;
+    color: #ff6667;
+    font-size: 16px;
+    padding: 5px;
+}
+.mes{
+    width: 500px;
+    margin: 50px auto;
+    color: #666666;
+    font-size: 14px;
+}
+.mes_style{
+    margin-bottom: 10px;
+}
+.mes_subject{
+    margin-bottom: 10px;
+}
+.mes_subject input{
+    width: 300px;
+    height: 32px;
+}
+.mes_content{
+    margin-bottom: 20px;
+}
+.mes_content textarea{
+    width: 300px;
+    height: 62px;
+}
+.mes button{
+    font-size: 16px;
+    width: 50px;
+    height: 26px;
+    margin-top: 20px;
+}

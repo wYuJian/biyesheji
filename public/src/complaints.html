@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../stylesheets/complaints.css">
+    <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    <script>
+        $(function () {
+            var userName='';
+            $.post('../cookies',function(data,status) {
+                if (data != '') {
+                    userName = data.username;
+                } else {
+                }
+            });
+            $('#btn_submit').on('click',function(){
+                $.post('../complaints',{
+                    'username':'test',
+                    'mes_type':$('input[name="mes_style"]:checked').val(),
+                    'mes_subject':$('.mes_subject input').val(),
+                    'mes_content':$('.mes_content textarea').val(),
+                    'mes_phone':$('.mes_phone input').val()
+                },function(data,status){
+                    var dataJson = JSON.parse(data);
+                    console.log(dataJson.code);
+                    if(dataJson.code){
+                        alert('投诉成功！')
+                    }
+                })
+            })
+        })
+    </script>
+</head>
+<!--投诉-->
+<body>
+<div class="head"><p>我的投诉</p></div>
+<div class="mes">
+    <div class="mes_style">
+        <span>投诉类型：</span>
+        <input type="radio" name='mes_style' value='投诉' checked='true'>投诉
+    </div>
+    <div class="mes_subject">
+        <span>投诉主题：</span>
+        <input type="text">
+    </div>
+    <div class="mes_content">
+        <span>投诉内容：</span>
+        <textarea cols='40' row='5' wrap='virtual'></textarea>
+    </div>
+    <div class="mes_phone">
+        <span>联系电话：</span>
+        <input type="text">
+    </div>
+    <button id="btn_submit">提交</button>
+
+</div>
+</body>
+</html>

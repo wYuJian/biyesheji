@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>购物车</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    <style>
+      *{margin: 0;padding: 0;}
+      ul{
+        list-style: none;
+      }
+      .fl{
+        float: left;
+      }
+      .fr{
+        float: right;
+      }
+      .head{
+        width: 100%;
+      }
+      .top{
+        text-align: center;
+        line-height: 30px;
+        width: 90%;
+        height: 30px;
+        margin: 0px auto;
+        font-size: 12px;
+        color: #777;
+      }
+      .top a{
+        display: block;
+        color: #777;
+      }
+      .rightContent{
+        width: 30%;
+      }
+      .leftContent{
+        width: 40%;
+        margin-left: 50px;
+      }
+      .leftContent span {
+        margin-right: 20px;
+      }
+      .rightContent ul li{
+        margin-left: 10px;
+      }
+      a{
+        display: inline-block;
+        text-decoration: none;
+      }
+      h1{
+        width: 500px;
+        margin: 0 auto;
+        text-align: center;
+        color: #e61952;
+        font-weight: 500;
+      }
+      .cart_nav{
+        width: 1000px;
+        margin: 20px auto;
+        overflow: hidden;
+        margin-bottom:20px ;
+      }
+      .cart_nav li{
+        width: 166px;
+        text-align: center;
+      }
+      .cartList{
+        width: 1000px;
+        margin: 0 auto;
+      }
+      .cartList li{
+        padding:5px 0 0 2px ;
+        border: 1px solid #cccccc;
+        margin-bottom: 5px;
+      }
+      .downnum,.addnum{
+        width: 26px;
+        height: 26px;
+        font-weight: 500;
+        outline: none;
+        border: 1px solid #999;
+        background: white;
+        font-size: 16px;
+        color: #333;
+      }
+      .all_desc{
+        position: fixed;
+        bottom: 50px;
+        right: 60px;
+        color:#e61952 ;
+        font-size: 20px;
+        font-weight: 800;
+      }
+      .btn_buy{
+        background: #e61952;
+        color:#fff ;
+        font-size: 18px;
+        width: 200px;
+        height: 50px;
+        outline: none;
+        border: 0;
+        cursor: pointer;
+      }
+    </style>
+    <script>
+      $(function () {
+          var userName='';
+          $.post('../cookies',function(data,status) {
+              if (data != '') {
+                  userName = data.username;
+                  $('.user').empty();
+                  $('.user').append(`<a class='fl' href="../src/personal.html">${data.username}</a>`)
+                  $('.personal a').attr('href','../src/personal.html');
+                  $('.cart a').attr('href','./cart');
+              } else {
+                  $('.user').append(`<a class='fl' href="../src/signin.html">登录&nbsp;|&nbsp;</a>
+                 <a class='fl' href="../src/login.html">注册</a>`)
+                  $('.personal a').attr('href','../src/signin.html');
+                  $('.cart a').attr('href','../src/signin.html');
+              }
+          });
+          var index =0;
+          $.post('../cartnum',function(data,status){
+              var numJson= JSON.parse(data);
+              var lis =$('#cartList li');
+//              console.log(lis.eq(1).attr('id'))
+              for(var i in numJson){
+                  for(var j in lis){
+                      if(numJson[i].product_id == lis.eq(j).attr('id')){
+                          $('.product_num').eq(j).val(numJson[i].product_num);
+                          $('.all_money').eq(j).text('￥'+($('.price').eq(j).text().substring(1)*$('.product_num').eq(j).val()).toFixed(2));
+                      }
+
+                  }
+              }
+              var index=0;
+              var number=0;
+              //购物车数量加减
+              $('.item').on('click',function(){
+                  index =$(this).index();
+                  number = parseInt($('.product_num').eq(index).val());
+                  var productId = $('#cartList li').eq(index).attr('id');
+                  $('.addnum').eq(index).on('click',function (event) {
+                      event.stopPropagation();
+                      number++;
+                      $('.product_num').eq(index).val(number);
+                      $.post('../up_cartNum',{"username":userName,"productNum":number,"productId":productId},function (data,status) {
+                      });
+                  })
+                  $('.downnum').eq(index).on('click',function (event) {
+                      event.stopPropagation();
+                      number--;
+                      if(number <=1){
+                          number=1;
+                      }
+                      $('.product_num').eq(index).val(number);
+                      $.post('../up_cartNum',{"username":userName,"productNum":number,"productId":productId},function (data,status) {
+                      });
+                  })
+
+
+              })
+
+              //选择商品下单
+              $(".cartList input[type='checkbox']").on('click',function () {
+                  if($(".cartList input[type='checkbox']:checked")){
+                      var goodId =$(this).parent().attr('id');
+                      var productNum =$(this).parent().children(".product_num").val();
+                      console.log($(this).parent().children(".product_num"));
+                      console.log(productNum)
+                      $('.btn_buy').on('click',function () {
+                          location.href=`now2buy?product_id=${goodId}&product_num=${number}&user=${userName}`;
+                      })
+                  }
+              })
+          })
+
+      })
+      function delli(id){
+          $("#cartList").children('#'+id).remove();
+          $.post('../cartProduct_delete',{
+              product_id:id
+          },function(data,status){
+            alert(data);
+          })
+      }
+    </script>
+  </head>
+  <body>
+  <!--head begin-->
+  <div class="head">
+    <div class="top">
+      <div class="leftContent fl">
+        <span class="fl">您好，欢迎您来到中国零食网！</span>
+        <div class="user fl">
+          <!--<a class='fl' href="../src/signin.html">登录&nbsp;|&nbsp;</a>-->
+          <!--<a class='fl' href="../src/login.html">注册</a>-->
+        </div>
+      </div>
+      <div class="rightContent fr">
+        <ul>
+          <li class="fl personal"><a href="">个人中心&nbsp;&nbsp;|</a></li>
+          <li class="fl cart"><a href="">购物车&nbsp;&nbsp;|</a></li>
+          <li class="fl"><a href="##">积分兑换&nbsp;&nbsp;|</a></li>
+          <li class="fl"><a href="##">帮助中心&nbsp;&nbsp;</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!--head end-->
+  <h1>购物车</h1>
+  <ul class="cart_nav">
+    <li class="fl" style="width: 120px;"><input type="checkbox"></li>
+    <li class="fl">商品信息</li>
+    <li class="fl">商品单价</li>
+    <li class="fl">数量</li>
+    <li class="fl">金额</li>
+    <li class="fl">操作</li>
+  </ul>
+    <ul id="cartList" class="cartList">
+        <% product_list.forEach(function(product){ %>
+      <!--<input type="checkbox">-->
+      <li class="item" name="listId" id="<%= product.product_id%>">
+        <input type="checkbox">
+        <a href="##" style="margin-left:25px;color: #272822; display: inline-block; width: 238px;  "><img class="fl" src="<%= product.product_mainimg.substring(6) %>" alt="" width="50px" height="50px"><p class="fr" style="width: 183px; padding-left: 5px;"><%= product.product_name %></p></a>
+        <em style="margin-left:60px; width: 40px; line-height: 60px; display: inline-block" class="price">￥<%= product.product_price %></em>
+        <span style="margin-left:80px; line-height: 60px; ">
+          <button class="downnum">-</button>
+          <input type="text" style="height: 25px;width: 41px;" class="product_num" value="" >
+          <button class="addnum">+</button>
+        </span>
+        <em class="all_money" style="margin-left:85px; line-height: 60px; width: 40px; display: inline-block">￥</em>
+        <button style="margin-left:120px; " onclick="delli('<%= product.product_id%>')">删除</button>
+      </li>
+        <% }) %>
+    </ul>
+  <div class="all_desc">
+    <!--<span>-->
+      <!--合计:-->
+      <!--<em>0.00</em>-->
+    <!--</span>-->
+    <button class="btn_buy">结算</button>
+  </div>
+  </body>
+</html>

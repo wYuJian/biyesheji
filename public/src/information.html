@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../stylesheets/information.css">
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script>
+        $(function () {
+            var userName = '';
+            $.post('../cookies',function(data,status){
+               if(data != ''){
+                   userName = data.username;
+               }else{}
+                $.post('../information',{
+                    'username':userName
+                },function(data,status){
+                    var dataJson = JSON.parse(data);
+                    for(var i in dataJson){
+                        $('#username').text(dataJson[i].username);
+                        $('#user_true_name').val(dataJson[i].user_true_name);
+                        $('#user_address').val(dataJson[i].user_address);
+                        $('#user_qq').val(dataJson[i].user_qq);
+                        $('#user_phone').val(dataJson[i].phonenum);
+                        $('#user_family_phone').val(dataJson[i].user_famil_phone);
+                        $('#user_em').val(dataJson[i].user_email);
+                        if(dataJson[i].user_sex=='女'){
+                            $("input[value='女']").attr('checked','true');
+                        }else{
+                            $("input[value='男']").attr('checked','true');
+                        }
+                    }
+                });
+            })
+
+            $('#btn_updata').on('click',function(){
+                $.post('../information_updata',{
+                    'username':$('#username').text(),
+                    'user_trueName': $('#user_true_name').val(),
+                    'user_address':$('#user_address').val(),
+                    'user_qq':$('#user_qq').val(),
+                    'user_phone':$('#user_phone').val(),
+                    'user_familyPhone':$('#user_family_phone').val(),
+                    'user_em':$('#user_em').val(),
+                    'user_sex':$('input[name="sex"]:checked').val()
+                },function(data,status){
+                    var dataJson = JSON.parse(data);
+                    if(dataJson.code){
+                        alert('修改成功！');
+                    }else{
+                        alert('修改失败！');
+                    }
+                })
+            })
+
+        })
+    </script>
+    <!--个人信息-->
+</head>
+<body>
+<div class="head"><p>个人信息</p></div>
+<table>
+    <tbody>
+    <tr>
+        <td style='text-align: right;'>用户名：</td>
+        <td><p id="username"></p></td>
+    </tr>
+    <tr>
+        <td style='text-align: right;'>真实姓名：</td>
+        <td><input type="text" id="user_true_name"></td>
+    </tr>
+    <tr>
+        <td style='text-align: right;'>性别：</td>
+        <td id="user_sex">
+            <input type="radio" name='sex'  value="男" checked='true'>男
+            <input type="radio" name='sex' value="女">女
+        </td>
+    </tr>
+    <tr>
+        <td style='text-align: right;'>详细地址：</td>
+        <td><input type="text" id="user_address"></td>
+    </tr>
+    <tr>
+        <td style='text-align: right;'>QQ：</td>
+        <td><input type="text" id="user_qq"></td>
+    </tr>
+    <tr>
+        <td style='text-align: right;'>手机号：</td>
+        <td><input type="text" id="user_phone"></td>
+    </tr>
+    <tr>
+        <td style='text-align: right;'>家庭电话：</td>
+        <td><input type="text" id="user_family_phone"></td>
+    </tr>
+    <tr>
+        <td style='text-align: right;'>联系邮箱:</td>
+        <td><input type="text" id="user_em"></td>
+    </tr>
+    <tr style='float: left;'>
+        <td><button id="btn_updata">确认修改</button></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

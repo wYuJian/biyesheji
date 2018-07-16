@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<!--suppress ALL -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../stylesheets/comment.css">
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script>
+        $(function(){
+            var userName='';
+            $.post('../cookies',function(data,status) {
+                if (data != '') {
+                    userName = data.username;
+                } else {
+                }
+                $.post('../comment',{
+                    'username':userName
+                },function(data,status){
+                    var comment = data[0];
+                    var comment1 = data[1];
+                    if(data.code == false){
+                        $('.wrap').append('<p>您还没有对商品进行评价！</p>')
+                    }else{
+                        for(var i in comment){
+                            for(var j in comment1){
+                                if(comment[i].product_id == comment1[j].product_id){
+                                    $('.wrap ul').append(`<li><span class="comment_conten fl">${comment[i].comment_content}</span>
+                                                       <span class="commenter fl">${comment[i].user_name}</span>
+                                                       <a class="goods_name fl" href="../../product_detail?product_id=${comment[i].product_id}" target="_parent" data-id="${comment[i].product_id}">${comment1[j].product_name}</a></li>`)
+                                }
+                            }
+                        }
+                    }
+                })
+            })
+
+
+
+        })
+    </script>
+</head>
+<!--收货信息-->
+<body>
+<div class="head"><p>我的评论</p></div>
+<div>
+    <ul class="comment_tab_list">
+        <li class="fl">评价内容</li>
+        <li class="fl">评价人</li>
+        <li class="fl">宝贝信息</li>
+        <li class="fl">操作</li>
+    </ul>
+</div>
+<div class="wrap">
+        <ul>
+
+        </ul>
+</div>
+
+</body>
+
+</html>

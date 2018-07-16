@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>投诉处理</title>
+    <link rel="stylesheet" href="../stylesheets/userComplaints.css">
+    <script src="//at.alicdn.com/t/font_399103_hqtvf6oym7xmvx6r.js"></script>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script>
+        function upComStatus(id){
+            $.post('../upComStatus',{
+                'id':id
+            },function(data,status){
+                $.post('../userComSuccess',function(data,status){
+                    $('.content').empty();
+                    data.forEach(function(list){
+                        if(list.com_status == 1){
+                            $('.content').append(` <li>
+                              <div class="fl"><p>${list.id}</p></div>
+                              <div class="fl"><p>${list.username}</p></div>
+                              <div class="fl"><p>${list.com_phone}</p></div>
+                              <div class="fl"><p>${list.com_type}</p></div>
+                              <div class="fl"><p>${list.com_subject}</p></d iv>
+                              <div class="fl"><p>${list.com_content}</p></div>
+                              <div class="fl"><p><svg class="icon2" aria-hidden="true">
+                                  <use xlink:href="#icon-yichuli"></use>
+                              </svg></p></div>
+                              <div class="fl">
+                                    <a href="javascript:void(0)" title="删除" onclick="delCom(${list.id})"><svg class="icon3" aria-hidden="true">
+                                         <use xlink:href="#icon-shanchu"></use>
+                                     </svg></a>
+                              </div>
+                            </li>`);
+                        }else{
+                            $('.content').append(` <li>
+                              <div class="fl"><p>${list.id}</p></div>
+                              <div class="fl"><p>${list.username}</p></div>
+                              <div class="fl"><p>${list.com_phone}</p></div>
+                              <div class="fl"><p>${list.com_type}</p></div>
+                              <div class="fl"><p>${list.com_subject}</p></div>
+                              <div class="fl"><p>${list.com_content}</p></div>
+                              <div class="fl"><p><svg class="icon" aria-hidden="true">
+                                  <use xlink:href="#icon-daichuli"></use>
+                              </svg></p></div>
+                              <div class="fl"><a href="javascript:void(0)" title="处理" onclick="upComStatus(${list.id})"><svg class="icon3" aria-hidden="true">
+                                  <use xlink:href="#icon-yichuli1"></use>
+                              </svg></a><a href="javascript:void(0)" title="删除" onclick="delCom(${list.id})"><svg class="icon3" aria-hidden="true">
+                                  <use xlink:href="#icon-shanchu"></use>
+                              </svg></a></div>
+                           </li>`);
+                        }
+                    })
+                })
+            })
+        }
+        function delCom(id){
+            $.post('../delCom',{'id':id},function(data,status){
+                if(data.code == true){
+                    alert('删除成功！');
+                    $.post('../userComSuccess',function(data,status){
+                        $('.content').empty();
+                        data.forEach(function(list){
+                            if(list.com_status == 1){
+                                $('.content').append(` <li>
+                              <div class="fl"><p>${list.id}</p></div>
+                              <div class="fl"><p>${list.username}</p></div>
+                              <div class="fl"><p>${list.com_phone}</p></div>
+                              <div class="fl"><p>${list.com_type}</p></div>
+                              <div class="fl"><p>${list.com_subject}</p></div>
+                              <div class="fl"><p>${list.com_content}</p></div>
+                              <div class="fl"><p><svg class="icon2" aria-hidden="true">
+                                  <use xlink:href="#icon-yichuli"></use>
+                              </svg></p></div>
+                              <div class="fl">
+                                    <a href="javascript:void(0)" title="删除" onclick="delCom(${list.id})"><svg class="icon3" aria-hidden="true">
+                                         <use xlink:href="#icon-shanchu"></use>
+                                     </svg></a>
+                              </div>
+                            </li>`);
+                            }else{
+                                $('.content').append(` <li>
+                              <div class="fl"><p>${list.id}</p></div>
+                              <div class="fl"><p>${list.username}</p></div>
+                              <div class="fl"><p>${list.com_phone}</p></div>
+                              <div class="fl"><p>${list.com_type}</p></div>
+                              <div class="fl"><p>${list.com_subject}</p></div>
+                              <div class="fl"><p>${list.com_content}</p></div>
+                              <div class="fl"><p><svg class="icon" aria-hidden="true">
+                                  <use xlink:href="#icon-daichuli"></use>
+                              </svg></p></div>
+                              <div class="fl"><a href="javascript:void(0)" title="处理" onclick="upComStatus(${list.id})"><svg class="icon3" aria-hidden="true">
+                                  <use xlink:href="#icon-yichuli1"></use>
+                              </svg></a><a href="javascript:void(0)" title="删除" onclick="delCom(${list.id})"><svg class="icon3" aria-hidden="true">
+                                  <use xlink:href="#icon-shanchu"></use>
+                              </svg></a></div>
+                           </li>`);
+                            }
+                        })
+                    })
+                }else{
+                    alert('删除失败！')
+                }
+            })
+        }
+        $(function () {
+            $.post('../userComSuccess',function(data,status){
+                $('.content').empty();
+               data.forEach(function(list){
+                   if(list.com_status == 1){
+                       $('.content').append(` <li>
+                              <div class="fl"><p>${list.id}</p></div>
+                              <div class="fl"><p>${list.username}</p></div>
+                              <div class="fl"><p>${list.com_phone}</p></div>
+                              <div class="fl"><p>${list.com_type}</p></div>
+                              <div class="fl"><p>${list.com_subject}</p></div>
+                              <div class="fl"><p>${list.com_content}</p></div>
+                              <div class="fl"><p><svg class="icon2" aria-hidden="true">
+                                  <use xlink:href="#icon-yichuli"></use>
+                              </svg></p></div>
+                              <div class="fl">
+                                    <a href="javascript:void(0)" title="删除" onclick="delCom(${list.id})"><svg class="icon3" aria-hidden="true">
+                                         <use xlink:href="#icon-shanchu"></use>
+                                     </svg></a>
+                              </div>
+                            </li>`);
+                   }else{
+                       $('.content').append(` <li>
+                              <div class="fl"><p>${list.id}</p></div>
+                              <div class="fl"><p>${list.username}</p></div>
+                              <div class="fl"><p>${list.com_phone}</p></div>
+                              <div class="fl"><p>${list.com_type}</p></div>
+                              <div class="fl"><p>${list.com_subject}</p></div>
+                              <div class="fl"><p>${list.com_content}</p></div>
+                              <div class="fl"><p><svg class="icon" aria-hidden="true">
+                                  <use xlink:href="#icon-daichuli"></use>
+                              </svg></p></div>
+                              <div class="fl"><a href="javascript:void(0)" title="处理" onclick="upComStatus(${list.id})"><svg class="icon3" aria-hidden="true">
+                                  <use xlink:href="#icon-yichuli1"></use>
+                              </svg></a><a href="javascript:void(0)" title="删除"><svg class="icon3" aria-hidden="true">
+                                  <use xlink:href="#icon-shanchu"></use>
+                              </svg></a></div>
+                           </li>`);
+                                         }
+               })
+            })
+            $('input:radio[name="status"]').on('click',function(){
+               var  status =  $(this).val();
+               $.post('../userComSuccess',{
+                   status:status
+               },function(data,status){
+                   $('.content').empty();
+                   data.forEach(function(list){
+                       if(list.com_status == 1){
+                           $('.content').append(` <li>
+                              <div class="fl"><p>${list.id}</p></div>
+                              <div class="fl"><p>${list.username}</p></div>
+                              <div class="fl"><p>${list.com_phone}</p></div>
+                              <div class="fl"><p>${list.com_type}</p></div>
+                              <div class="fl"><p>${list.com_subject}</p></div>
+                              <div class="fl"><p>${list.com_content}</p></div>
+                              <div class="fl"><p><svg class="icon2" aria-hidden="true">
+                                  <use xlink:href="#icon-yichuli"></use>
+                              </svg></p></div>
+                              <div class="fl">
+                                    <a href="javascript:void(0)" title="删除" onclick="delCom(${list.id})"><svg class="icon3" aria-hidden="true">
+                                         <use xlink:href="#icon-shanchu"></use>
+                                     </svg></a>
+                              </div>
+                            </li>`);
+                       }else{
+                           $('.content').append(` <li>
+                              <div class="fl"><p>${list.id}</p></div>
+                              <div class="fl"><p>${list.username}</p></div>
+                              <div class="fl"><p>${list.com_phone}</p></div>
+                              <div class="fl"><p>${list.com_type}</p></div>
+                              <div class="fl"><p>${list.com_subject}</p></div>
+                              <div class="fl"><p>${list.com_content}</p></div>
+                              <div class="fl"><p><svg class="icon" aria-hidden="true">
+                                  <use xlink:href="#icon-daichuli"></use>
+                              </svg></p></div>
+                              <div class="fl"><a href="javascript:void(0)" title="处理" onclick="upComStatus(${list.id})"><svg class="icon3" aria-hidden="true">
+                                  <use xlink:href="#icon-yichuli1"></use>
+                              </svg></a><a href="javascript:void(0)" title="删除" onclick="delCom(${list.id})"><svg class="icon3" aria-hidden="true">
+                                  <use xlink:href="#icon-shanchu"></use>
+                              </svg></a></div>
+                           </li>`);
+                       }
+                   })
+               })
+            })
+        })
+    </script>
+</head>
+<body>
+<div>
+    位置：反馈处理->投诉信息
+</div>
+<div style="margin-top: 30px ">
+    <input type="radio" name='status'  value="all" checked='checked'>全部
+    <input type="radio" name='status' value="0">未处理
+    <input type="radio" name='status' value="1">已处理
+</div>
+<ul class="tab">
+    <li>ID</li>
+    <li>用户名</li>
+    <li>联系电话</li>
+    <li>类型</li>
+    <li>投诉主题</li>
+    <li>投诉内容</li>
+    <li>状态</li>
+    <li>操作</li>
+</ul>
+<ul class="content">
+    <!--<li>-->
+        <!--<div class="fl"><p>1</p></div>-->
+        <!--<div class="fl"><p>test</p></div>-->
+        <!--<div class="fl"><p>13123132003</p></div>-->
+        <!--<div class="fl"><p>投诉</p></div>-->
+        <!--<div class="fl"><p>测试投诉</p></div>-->
+        <!--<div class="fl"><p>这是测试</p></div>-->
+        <!--<div class="fl"><p><svg class="icon" aria-hidden="true">-->
+            <!--<use xlink:href="#icon-daichuli"></use>-->
+        <!--</svg></p></div>-->
+        <!--<div class="fl"><a href="javascript:void(0)" title="处理"><svg class="icon" aria-hidden="true">-->
+            <!--<use xlink:href="#icon-yichuli1"></use>-->
+        <!--</svg></a><a href="javascript:void(0)" title="删除"><svg class="icon" aria-hidden="true">-->
+            <!--<use xlink:href="#icon-shanchu"></use>-->
+        <!--</svg></a></div>-->
+    <!--</li>-->
+</ul>
+</body>
+</html>

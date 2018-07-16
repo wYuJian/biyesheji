@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../stylesheets/collection.css">
+    <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    <script>
+        $(function(){
+            var userName='';
+            $.post('../cookies',function(data,status) {
+                if (data != '') {
+                    userName = data.username;
+                } else {}
+                $.post('../collection',{
+                    'username':userName
+                },function(data,status){
+                    var dataJson = JSON.parse(data);
+                    for(var i in dataJson){
+                        var find_li = $('<li class="collection_lists_Item fl" data-id='+dataJson[i].product_id+'>' +
+                            '<div class="img_list"><a href='+"../product_detail?product_id="+dataJson[i].product_id+' target="_parent" class="img-collection-img-link"><img src='+dataJson[i].product_mainimg.substring(6)+' alt="" class="img-collection-img"></a></div>' +
+                            '<a href='+"../product_detail?product_id="+dataJson[i].product_id+' class="findgo-btn find-btn" target="_parent">进入详情</a>' +
+                            '<div class="finddel-btn find-btn" >删除宝贝</div>' +
+                            '<a href='+"../product_detail?product_id="+dataJson[i].product_id+' class="find_name"><p class="find_name">'+dataJson[i].product_name+'</p></a></li>');
+                        $('.collection_lists').append(find_li);
+                    }
+                    $('.finddel-btn').on('click',function(){
+                        $(this).parent().remove();
+                        $.post('../collection_del',{
+                            product_id:$(this).parent().attr('data-id')
+                        },function(data,status){
+                            alert(data);
+                        })
+                    })
+                })
+            })
+
+
+        })
+    </script>
+</head>
+<!--收藏-->
+<body>
+<div class="head"><p>我的收藏</p></div>
+<!--<div class="nav">-->
+    <!--<ul>-->
+        <!--<li class='fl'>商品名称</li>-->
+        <!--<li class='fl'>价格</li>-->
+        <!--<li class='fl'>操作</li>-->
+    <!--</ul>-->
+<!--</div>-->
+<div class="wrap">
+    <ul class="collection_lists">
+
+    </ul>
+</div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+.footer_copyright{
+    width: 100%;
+    height: 214px;
+    margin-top: 200px;
+    /*background: url(http://a3.jmstatic.com/9fab7638c2b22895/newindex_footer_bg.png) #404040 center top repeat-x;*/
+}
+.footer_copy_con{
+    /*display: inline-block;*/
+    color: #000;
+    width: 1090px;
+    height: 78px;
+    margin: 0 auto;
+    font-size: 12px;
+    text-align: center;
+}
+.footer_copyright p{
+    width: 1090px;
+    margin: 0 auto;
+    text-align: center;
+}
+.footer_copy_logo{
+    display: inline-block;
+    width: 126px;
+    height: 50px;
+    background: url(http://a4.jmstatic.com/a6195c982dae0cec/footer_btm_icon.png) no-repeat;
+}
+.logo02{
+    background-position: -126px 0;
+}
+.logo03{
+    background-position: -252px 0;
+}
+.logo04{
+    background-position: -378px 0;
+}
+.logo05{
+    background-position: -504px 0;
+}
